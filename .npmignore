@@ -1,0 +1,7 @@
+# Source
+src
+
+# Configuration files
+.eslintrc.js
+.prettierrc.js
+.nvmrc
