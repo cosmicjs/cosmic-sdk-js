@@ -1,5 +1,7 @@
 # Source
 src
+.husky
+.vscode
 
 # Configuration files
 .eslintrc.js
