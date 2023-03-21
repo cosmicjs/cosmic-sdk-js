@@ -1,0 +1,60 @@
+{
+	"name": "@cosmicjs/sdk",
+	"version": "0.1.0",
+	"description": "The official client module for Cosmic. This module helps you easily add dynamic content to your website or application using the Cosmic headless CMS.",
+	"keywords": [
+		"headlesscms",
+		"cms",
+		"node",
+		"content",
+		"api",
+		"react",
+		"reactjs",
+		"vue",
+		"vuejs",
+		"nextjs"
+	],
+	"homepage": "https://www.cosmicjs.com",
+	"bugs": {
+		"url": "https://github.com/cosmicjs/cosmic-sdk-js/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cosmicjs/cosmic-sdk-js.git"
+	},
+	"license": "MIT",
+	"author": "Tony Spiro <tony@cosmicjs.com>",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"tsc:lint": "tsc",
+		"lint": "eslint --fix 'src/**/*.{ts,js}'",
+		"format": "prettier --write './src/**/*.{ts,js}'",
+		"prepare": "husky install"
+	},
+	"dependencies": {
+		"axios": "^0.21.1",
+		"form-data": "^3.0.0"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.56.0",
+		"eslint": "^8.36.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-import-resolver-typescript": "^3.5.3",
+		"eslint-plugin-prettier": "^4.2.1",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.2.0",
+		"prettier": "^2.8.6",
+		"tsup": "^6.7.0",
+		"typescript": "^5.0.2"
+	},
+	"lint-staged": {
+		"src/**/*.{ts,js}": [
+			"npx prettier --write",
+			"npx eslint --fix"
+		]
+	}
+}
