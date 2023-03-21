@@ -6,7 +6,7 @@ export type BucketConfig = {
   bucketSlug: string;
   readKey: string;
   writeKey?: string;
-  apiVersion: 'v3';
-  apiEnvironment: 'staging' | 'production';
+  apiVersion?: 'v3';
+  apiEnvironment?: 'staging' | 'production';
   custom?: APIConfig;
 };
