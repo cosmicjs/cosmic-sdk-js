@@ -130,7 +130,7 @@ await cosmic.objects.deleteOne({
 })
 ```
 
-## Further learning
+## Learn more
 
 Go to the [Cosmic docs](https://docs-v3.cosmicjs.com) to learn more capabilities.
 
