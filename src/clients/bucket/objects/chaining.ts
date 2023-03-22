@@ -43,11 +43,6 @@ export default class Chaining {
     return this;
   }
 
-  showMetafields() {
-    this.endpoint += `&show_metafields=true`;
-    return this;
-  }
-
   useCache() {
     this.endpoint += `&use_cache=true`;
     return this;
