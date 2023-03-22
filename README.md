@@ -1,6 +1,8 @@
 ![Cosmic-Dashboard-Dark](https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format)
 
-## Content management for websites and apps
+<center>
+  <h1>Content management for websites and apps</h1>
+</center>
 
 [Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management service) that provides a web dashboard to create content and an API toolkit to deliver content to any website or application. Build nearly any type of content in the dashboard then deliver your content using this SDK. [Get started free →](https://beta.cosmicjs.com/signup)
 
