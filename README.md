@@ -73,7 +73,7 @@ const posts = await cosmic.objects.findOne({
 ])
 ```
 
-## Creating, updating, and deleting Objects
+## Create, update, and delete Objects
 
 To write to the Cosmic API, you will need to set the Bucket write key found in _Bucket > Settings > API Access_. (NOTE: never expose your write key in any client-side code)
 
