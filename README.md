@@ -64,7 +64,7 @@ This above example fetches Objects in the `posts` Object type returning the `tit
 Use the `objects.findOne()` method with `type` and `slug` to fetch a single Object.
 
 ```jsx
-const posts = await cosmic.objects.findOne({
+const post = await cosmic.objects.findOne({
   type: 'pages',
   slug: 'home'
 })
