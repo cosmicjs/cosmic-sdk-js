@@ -6,7 +6,7 @@
 
 ## Install
 
-Install the Cosmic JavaScript SDK:
+Install the Cosmic JavaScript SDK.
 
 ```bash
 yarn add @cosmicjs/sdk
@@ -39,7 +39,7 @@ const cosmic = createBucketClient({
 
 Objects are the basic building blocks of content in Cosmic.
 
-#### Get multiple Objects [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-objects)]
+### Get multiple Objects [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-objects)]
 
 Use the `objects.find()` method to fetch Objects.
 
@@ -57,7 +57,7 @@ const posts = await cosmic.objects.find({
 
 This above example fetches Objects in the `posts` Object type returning the `title`, `slug`, and `metadata` properties, limiting the response to `10` Objects.
 
-#### Get single Object by slug [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-a-single-object-by-slug)]
+### Get single Object by slug [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-a-single-object-by-slug)]
 
 Use the `objects.findOne()` method with `type` and `slug` to fetch a single Object.
 
@@ -85,7 +85,7 @@ const cosmic = createBucketClient({
 })
 ```
 
-#### Create Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#create-an-object)]
+### Create Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#create-an-object)]
 
 Use the `objects.insertOne()` method to create an Object.
 
@@ -102,7 +102,7 @@ await cosmic.objects.insertOne({
 })
 ```
 
-#### Update Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#update-an-object)]
+### Update Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#update-an-object)]
 
 Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and including properties that you want to update using `$set`.
 
@@ -120,7 +120,7 @@ await cosmic.objects.updateOne({
 })
 ```
 
-#### Delete Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#delete-an-object)]
+### Delete Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#delete-an-object)]
 
 Use the `objects.deleteOne()` method to delete an Object by specifying the Object `id`.
 
