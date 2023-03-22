@@ -12,10 +12,13 @@ export function validateAndExtractAPIConfig(config: BucketConfig): APIConfig {
       uploadUrl: config.custom.uploadUrl,
     };
   }
-  if (!['v3'].includes(config.apiVersion)) {
+  if (!config.apiVersion || !['v3'].includes(config.apiVersion)) {
     throw new Error(`apiVersion value can only be from 'v1', 'v2' & 'v3'`);
   }
-  if (!['production', 'staging'].includes(config.apiEnvironment)) {
+  if (
+    !config.apiEnvironment ||
+    !['production', 'staging'].includes(config.apiEnvironment)
+  ) {
     throw new Error(
       `apiEnvironment value can only be from 'production' & 'staging'`
     );
