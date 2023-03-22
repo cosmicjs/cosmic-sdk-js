@@ -71,7 +71,6 @@ const posts = await cosmic.objects.findOne({
   'slug',
   'metadata'
 ])
-.limit(10)
 ```
 
 ## Creating, updating, and deleting Objects
