@@ -1,7 +1,7 @@
-import { promiser } from '../../../utils/request.promiser';
-import Chaining from './chaining';
+import { promiser } from '../../../../utils/request.promiser';
+import MethodChaining from '../../lib/methodChaining';
 
-export default class FindChaining extends Chaining {
+export default class FindChaining extends MethodChaining {
   limit(limit: number) {
     this.endpoint += `&limit=${limit}`;
     return this;

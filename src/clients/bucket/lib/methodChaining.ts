@@ -1,4 +1,4 @@
-export default class Chaining {
+export default class MethodChaining {
   endpoint: string = '';
 
   constructor(endpoint: string) {
@@ -18,11 +18,6 @@ export default class Chaining {
     return this;
   }
 
-  depth(depth: number) {
-    this.endpoint += `&depth=${depth}`;
-    return this;
-  }
-
   sort(sort: string) {
     this.endpoint += `&sort=${sort}`;
     return this;
@@ -30,16 +25,6 @@ export default class Chaining {
 
   skip(skip: number) {
     this.endpoint += `&skip=${skip}`;
-    return this;
-  }
-
-  status(status: string) {
-    this.endpoint += `&status=${status}`;
-    return this;
-  }
-
-  after(after: string) {
-    this.endpoint += `&after=${after}`;
     return this;
   }
 

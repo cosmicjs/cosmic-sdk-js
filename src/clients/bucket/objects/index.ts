@@ -1,12 +1,11 @@
 import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
+import { GenericObject } from '../../../types/generic.types';
 import { requestHandler } from '../../../utils/request.handler';
-import FindChaining from './find.chaining';
-import FindOneChaining from './findOne.chaining';
+import FindChaining from './lib/find.chaining';
+import FindOneChaining from './lib/findOne.chaining';
 
-type GenericObject = Record<string, unknown>;
-
-let headers: any;
+let headers: GenericObject;
 
 export const objectsChainMethods = (
   bucketConfig: BucketConfig,

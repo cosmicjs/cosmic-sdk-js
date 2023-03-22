@@ -1,4 +1,4 @@
-import { promiser } from '../../../utils/request.promiser';
+import { promiser } from '../../../../utils/request.promiser';
 import Chaining from './chaining';
 
 export default class FindOneChaining extends Chaining {
