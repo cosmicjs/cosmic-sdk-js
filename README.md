@@ -26,7 +26,7 @@ import { createBucketClient } from '@cosmicjs/sdk'
 
 ## Authentication
 
-In your [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket:
+In your [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
 
 ```jsx
 const cosmic = createBucketClient({
@@ -41,7 +41,7 @@ Objects are the basic building blocks of content in Cosmic.
 
 **Get multiple Objects** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-objects)]
 
-Use the `objects.find` method to fetch your Objects.
+Use the `objects.find` method to fetch Objects.
 
 ```jsx
 const posts = await cosmic.objects.find({
