@@ -1,6 +1,4 @@
-<p align="center">
-  <a href="https://www.cosmicjs.com"><img src="https://imgix.cosmicjs.com/5ea81460-c8db-11ed-b01d-23d7b265c299-GitHub2x.png?w=2000&auto=format" alt="Cosmic" width="100%"></a>
-</p>
+![Cosmic-Dark](https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format#gh-dark-mode-only)![Cosmic-Light](https://imgix.cosmicjs.com/ca75a640-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-light.png?w=2000&auto=format#gh-light-mode-only)
 
 ## Content management made simple, fast, and secure.
 
