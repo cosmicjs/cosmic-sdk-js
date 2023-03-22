@@ -1,4 +1,6 @@
-![Cosmic-Dashboard-Dark](https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format)
+<a href="https://beta.cosmicjs.com/signup">
+  <img src="https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format" alt="Cosmic dashboard darkmode" />
+</a>
 
 <h1 align="center">Cosmic JavaScript SDK</h1>
 
