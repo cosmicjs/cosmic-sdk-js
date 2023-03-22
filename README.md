@@ -87,7 +87,7 @@ const cosmic = createBucketClient({
 
 **Create Object** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#create-an-object)]
 
-Use the `objects.insertOne` method to create Objects.
+Use the `objects.insertOne` method to create an Object.
 
 ```jsx
 await cosmic.objects.insertOne({
