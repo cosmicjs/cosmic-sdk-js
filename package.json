@@ -1,6 +1,6 @@
 {
 	"name": "@cosmicjs/sdk",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "The official client module for Cosmic. This module helps you easily add dynamic content to your website or application using the Cosmic headless CMS.",
 	"keywords": [
 		"headlesscms",
@@ -28,7 +28,7 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"build": "tsup src/index.ts --format cjs,esm --dts --minify",
 		"tsc:lint": "tsc",
 		"lint": "eslint --fix 'src/**/*.{ts,js}'",
 		"format": "prettier --write './src/**/*.{ts,js}'",
