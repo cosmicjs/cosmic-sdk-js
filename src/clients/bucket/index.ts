@@ -1,6 +1,8 @@
 import { BucketConfig } from '../../types/config.types';
 import { validateAndExtractAPIConfig } from '../../utils/config.validation';
+import { mediaChainMethods } from './media';
 import { objectsChainMethods } from './objects';
+import { objectTypesChainMethods } from './objectTypes';
 
 export const createBucketClient = (config: BucketConfig) => {
   const bucketConfig: BucketConfig = {
@@ -12,6 +14,8 @@ export const createBucketClient = (config: BucketConfig) => {
 
   return {
     objects: objectsChainMethods(bucketConfig, apiConfig),
+    objectTypes: objectTypesChainMethods(bucketConfig, apiConfig),
+    media: mediaChainMethods(bucketConfig, apiConfig),
   };
 };
 
