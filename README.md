@@ -41,7 +41,7 @@ Objects are the basic building blocks of content in Cosmic.
 
 **Get multiple Objects** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-objects)]
 
-Use the `objects.find` method to fetch Objects.
+Use the `objects.find()` method to fetch Objects.
 
 ```jsx
 const posts = await cosmic.objects.find({
@@ -59,7 +59,7 @@ This example fetches 10 Objects in the `posts` Object type returning the `title`
 
 **Get single Object by slug** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-a-single-object-by-slug)]
 
-Use the `objects.findOne` method with `type` and `slug` to fetch a single Object.
+Use the `objects.findOne()` method with `type` and `slug` to fetch a single Object.
 
 ```jsx
 const posts = await cosmic.objects.findOne({
@@ -87,7 +87,7 @@ const cosmic = createBucketClient({
 
 **Create Object** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#create-an-object)]
 
-Use the `objects.insertOne` method to create an Object.
+Use the `objects.insertOne()` method to create an Object.
 
 ```jsx
 await cosmic.objects.insertOne({
@@ -104,7 +104,7 @@ await cosmic.objects.insertOne({
 
 **Update Object** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#update-an-object)]
 
-Use the `objects.updateOne` method to update an Object by specifying the Object `id`. Include the properties that you want to update using `$set`.
+Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and including properties that you want to update using `$set`.
 
 ```jsx
 await cosmic.objects.updateOne({
@@ -122,7 +122,7 @@ await cosmic.objects.updateOne({
 
 **Delete Object** [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#delete-an-object)]
 
-Use the `objects.deleteOne` method to delete an Object by specifying the Object `id`.
+Use the `objects.deleteOne()` method to delete an Object by specifying the Object `id`.
 
 ```jsx
 await cosmic.objects.deleteOne({
