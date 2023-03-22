@@ -1,4 +1,4 @@
-![Cosmic-Dark](https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format#gh-dark-mode-only)
+![Cosmic-Dashboard-Dark](https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format#gh-dark-mode-only)
 
 ## Content management made simple, fast, and secure.
 
