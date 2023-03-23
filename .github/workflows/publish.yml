@@ -1,0 +1,46 @@
+name: Package Checks
+
+on:
+  push:
+    branches:
+      - 'main'
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+          cache: 'npm'
+      - name: Install npm packages
+        run: npm ci
+      - name: Eslint
+        run: npx eslint 'src/**/*.{js,ts}'
+      - name: TSC
+        run: npm run tsc:lint
+      - name: Build Package
+        run: npm run build
+  publish:
+    runs-on: ubuntu-latest
+    environment: prod
+    needs: checks
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+          cache: 'npm'
+      - name: Install npm packages
+        run: npm ci
+      - name: Publish package
+        run: npx semantic-release --debug
