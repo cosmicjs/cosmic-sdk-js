@@ -28,7 +28,7 @@ import { createBucketClient } from '@cosmicjs/sdk'
 
 ## Authentication
 
-In your [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
+In the [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
 
 ```jsx
 const cosmic = createBucketClient({
