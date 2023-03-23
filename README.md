@@ -4,7 +4,7 @@
 
 <h1 align="center">Cosmic JavaScript SDK</h1>
 
-[Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management service) that provides a web dashboard to create content and an API toolkit to deliver content to any website or application. Nearly any type of content can be built using the dashboard then delivered using this SDK. [Get started free →](https://beta.cosmicjs.com/signup)
+[Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management system) that provides a web dashboard to create content and an API toolkit to deliver content to any website or application. Nearly any type of content can be built using the dashboard then delivered using this SDK. [Get started free →](https://beta.cosmicjs.com/signup)
 
 ## Install
 
@@ -23,7 +23,7 @@ npm install @cosmicjs/sdk
 Import Cosmic into your app using the `createBucketClient` method.
 
 ```jsx
-import { createBucketClient } from '@cosmicjs/sdk'
+import { createBucketClient } from '@cosmicjs/sdk';
 ```
 
 ## Authentication
@@ -33,8 +33,8 @@ In the [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket >
 ```jsx
 const cosmic = createBucketClient({
   bucketSlug: 'BUCKET_SLUG',
-  readKey: 'BUCKET_READ_KEY'
-})
+  readKey: 'BUCKET_READ_KEY',
+});
 ```
 
 ## Get Objects
@@ -46,15 +46,12 @@ Objects are the basic building blocks of content in Cosmic.
 Use the `objects.find()` method to fetch Objects.
 
 ```jsx
-const posts = await cosmic.objects.find({
-  type: 'posts' 
-})
-.props([
-  'title',
-  'slug',
-  'metadata'
-])
-.limit(10)
+const posts = await cosmic.objects
+  .find({
+    type: 'posts',
+  })
+  .props(['title', 'slug', 'metadata'])
+  .limit(10);
 ```
 
 The above example fetches Objects in the `posts` Object type returning the `title`, `slug`, and `metadata` properties, limiting the response to `10` Objects.
@@ -64,15 +61,12 @@ The above example fetches Objects in the `posts` Object type returning the `titl
 Use the `objects.findOne()` method with `type` and `slug` to fetch a single Object.
 
 ```jsx
-const post = await cosmic.objects.findOne({
-  type: 'pages',
-  slug: 'home'
-})
-.props([
-  'title',
-  'slug',
-  'metadata'
-])
+const post = await cosmic.objects
+  .findOne({
+    type: 'pages',
+    slug: 'home',
+  })
+  .props(['title', 'slug', 'metadata']);
 ```
 
 ## Create, update, and delete Objects
@@ -83,8 +77,8 @@ To write to the Cosmic API, you will need to set the Bucket write key found in _
 const cosmic = createBucketClient({
   bucketSlug: 'BUCKET_SLUG',
   readKey: 'BUCKET_READ_KEY',
-  writeKey: 'BUCKET_WRITE_KEY'
-})
+  writeKey: 'BUCKET_WRITE_KEY',
+});
 ```
 
 ### Create Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#create-an-object)]
@@ -99,9 +93,9 @@ await cosmic.objects.insertOne({
   metadata: {
     seo_description: 'This is the blog post SEO description.',
     featured_post: true,
-    tags: ['javascript','cms']
-  }
-})
+    tags: ['javascript', 'cms'],
+  },
+});
 ```
 
 ### Update Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#update-an-object)]
@@ -109,17 +103,19 @@ await cosmic.objects.insertOne({
 Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and include properties that you want to update using `$set`.
 
 ```jsx
-await cosmic.objects.updateOne({
-  id: '5ff75368c2dfa81a91695cec'
-},
-{
-  $set: {
-    content: 'This is the updated blog post content... I got it now!',
-    metadata: {
-      featured_post: false
-    }
+await cosmic.objects.updateOne(
+  {
+    id: '5ff75368c2dfa81a91695cec',
+  },
+  {
+    $set: {
+      content: 'This is the updated blog post content... I got it now!',
+      metadata: {
+        featured_post: false,
+      },
+    },
   }
-})
+);
 ```
 
 ### Delete Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#delete-an-object)]
@@ -128,8 +124,8 @@ Use the `objects.deleteOne()` method to delete an Object by specifying the Objec
 
 ```jsx
 await cosmic.objects.deleteOne({
-  id: '5ff75368c2dfa81a91695cec'
-})
+  id: '5ff75368c2dfa81a91695cec',
+});
 ```
 
 ## Learn more
