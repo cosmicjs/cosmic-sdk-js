@@ -4,7 +4,7 @@
 
 <h1 align="center">Cosmic JavaScript SDK</h1>
 
-[Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management service) that provides a web dashboard to create content and an API toolkit to deliver content to any website or application. Nearly any type of content can be built using the dashboard then delivered using this SDK. [Get started free →](https://beta.cosmicjs.com/signup)
+[Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management service) that provides a web dashboard to create content and a API toolkits to deliver content to any website or application. Build content models in the dashboard then deliver content using this SDK. [Get started free →](https://beta.cosmicjs.com/signup)
 
 ## Install
 
