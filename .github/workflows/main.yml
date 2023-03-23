@@ -1,9 +1,9 @@
 name: Package Checks
 
 on:
-  push:
+  pull_request:
     branches:
-      - '**'
+      - 'main'
 
 jobs:
   checks:
