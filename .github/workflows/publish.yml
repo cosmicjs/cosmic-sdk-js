@@ -14,8 +14,6 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: prod
-    needs: checks
 
     steps:
       - name: Checkout source code
