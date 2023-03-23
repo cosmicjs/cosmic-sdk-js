@@ -57,7 +57,7 @@ const posts = await cosmic.objects.find({
 .limit(10)
 ```
 
-This above example fetches Objects in the `posts` Object type returning the `title`, `slug`, and `metadata` properties, limiting the response to `10` Objects.
+The above example fetches Objects in the `posts` Object type returning the `title`, `slug`, and `metadata` properties, limiting the response to `10` Objects.
 
 ### Get single Object by slug [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-a-single-object-by-slug)]
 
