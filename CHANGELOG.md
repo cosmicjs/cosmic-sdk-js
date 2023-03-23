@@ -1,5 +1,12 @@
 # @cosmicjs/sdk
 
+## 1.0.1
+
+### Patch Changes
+
+- 738a079: edit readme
+- 4ddcab6: edit cms abbrevation
+
 ## 1.0.0
 
 ### Major Changes
