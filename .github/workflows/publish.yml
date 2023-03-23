@@ -1,4 +1,4 @@
-name: Package Checks
+name: Publish Package
 
 on:
   push:
