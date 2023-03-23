@@ -4,10 +4,10 @@ src
 .vscode
 .github
 .git
+.changeset
 
 # Configuration files
 .eslintrc.js
 .prettierrc.js
 .nvmrc
-.releaserc.js
 tsconfig.json
