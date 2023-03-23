@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.2
+
+### Patch Changes
+
+- 66f489d: edit readme copy and link to dashboard
+
 ## 1.0.1
 
 ### Patch Changes
