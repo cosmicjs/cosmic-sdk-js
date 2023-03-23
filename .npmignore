@@ -2,9 +2,12 @@
 src
 .husky
 .vscode
+.github
+.git
 
 # Configuration files
 .eslintrc.js
 .prettierrc.js
 .nvmrc
+.releaserc.js
 tsconfig.json
