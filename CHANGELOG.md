@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.4
+
+### Patch Changes
+
+- 2aea85b: update readme to include concise format for updateOne and deleteOne
+
 ## 1.0.3
 
 ### Patch Changes
