@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.5
+
+### Patch Changes
+
+- ebddb45: remove $set from readme example
+
 ## 1.0.4
 
 ### Patch Changes
