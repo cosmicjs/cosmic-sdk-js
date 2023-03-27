@@ -4,6 +4,7 @@ import { APIConfig, BucketConfig } from '../../../types/config.types';
 import { GenericObject } from '../../../types/generic.types';
 import { InsertMediaType } from '../../../types/media.types';
 import { requestHandler } from '../../../utils/request.handler';
+import { validateWriteKeyAndReturnHeaders } from '../../../utils/writeKey.validation';
 import FindChaining from './lib/find.chaining';
 import FindOneChaining from './lib/findOne.chaining';
 
@@ -21,6 +22,7 @@ export const mediaChainMethods = (
     }`;
     return new FindChaining(endpoint);
   },
+
   findOne(query: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
@@ -29,6 +31,7 @@ export const mediaChainMethods = (
     }`;
     return new FindOneChaining(endpoint);
   },
+
   async insertOne(params: InsertMediaType) {
     const endpoint = `${apiConfig.uploadUrl}/buckets/${bucketConfig.bucketSlug}/media`;
     const data = new FormData();
@@ -73,25 +76,18 @@ export const mediaChainMethods = (
         throw error.response.data;
       });
   },
+
   async updateOne(id: string, updates: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/media/${id}`;
-    if (bucketConfig.writeKey) {
-      headers = {
-        Authorization: `Bearer ${bucketConfig.writeKey}`,
-      };
-    }
+    headers = validateWriteKeyAndReturnHeaders(bucketConfig.writeKey);
     return requestHandler(HTTP_METHODS.PATCH, endpoint, updates, headers);
   },
+
   async deleteOne(id: string, triggerWebhook = false) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/media/${id}${triggerWebhook ? '?trigger_webhook=true' : ''}`;
-
-    if (bucketConfig.writeKey) {
-      headers = {
-        Authorization: `Bearer ${bucketConfig.writeKey}`,
-      };
-    }
+    headers = validateWriteKeyAndReturnHeaders(bucketConfig.writeKey);
     return requestHandler(HTTP_METHODS.DELETE, endpoint, null, headers);
   },
 });
