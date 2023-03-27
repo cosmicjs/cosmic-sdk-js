@@ -102,7 +102,7 @@ await cosmic.objects.insertOne({
 
 ### Update Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#update-an-object)]
 
-Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and include properties that you want to update using `$set`.
+Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and include properties that you want to update.
 
 ```jsx
 await cosmic.objects.updateOne('5ff75368c2dfa81a91695cec', {
