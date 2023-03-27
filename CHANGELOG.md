@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.3
+
+### Patch Changes
+
+- b5af5d8: Added validation for writeKey on package level.
+
 ## 1.0.2
 
 ### Patch Changes
