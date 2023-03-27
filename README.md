@@ -105,19 +105,12 @@ await cosmic.objects.insertOne({
 Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and include properties that you want to update using `$set`.
 
 ```jsx
-await cosmic.objects.updateOne(
-  {
-    id: '5ff75368c2dfa81a91695cec',
+await cosmic.objects.updateOne('5ff75368c2dfa81a91695cec', {
+  content: 'This is the updated blog post content... I got it now!',
+  metadata: {
+    featured_post: false,
   },
-  {
-    $set: {
-      content: 'This is the updated blog post content... I got it now!',
-      metadata: {
-        featured_post: false,
-      },
-    },
-  }
-);
+});
 ```
 
 ### Delete Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#delete-an-object)]
@@ -125,9 +118,7 @@ await cosmic.objects.updateOne(
 Use the `objects.deleteOne()` method to delete an Object by specifying the Object `id`.
 
 ```jsx
-await cosmic.objects.deleteOne({
-  id: '5ff75368c2dfa81a91695cec',
-});
+await cosmic.objects.deleteOne('5ff75368c2dfa81a91695cec');
 ```
 
 ## Learn more
