@@ -15,7 +15,7 @@ Install the Cosmic JavaScript SDK.
 ```bash
 yarn add @cosmicjs/sdk
 # OR
-pnpm install @cosmicjs/sdk
+pnpm add @cosmicjs/sdk
 # OR
 npm install @cosmicjs/sdk
 ```
