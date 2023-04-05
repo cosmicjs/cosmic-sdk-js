@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.6
+
+### Patch Changes
+
+- e90ba95: fix pnpm typo in readme
+
 ## 1.0.5
 
 ### Patch Changes
