@@ -14,7 +14,7 @@ export const mediaChainMethods = (
   bucketConfig: BucketConfig,
   apiConfig: APIConfig
 ) => ({
-  find(query: GenericObject) {
+  find(query?: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/media?read_key=${bucketConfig.readKey}${

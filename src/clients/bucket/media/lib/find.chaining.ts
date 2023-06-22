@@ -7,14 +7,23 @@ export default class FindChaining extends MethodChaining {
     return this;
   }
 
-  async then(resolve: any, reject: any) {
+  async then<FulfilledResult = any, RejectedResult = never>(
+    onFulfilled?:
+      | ((value: any) => FulfilledResult | PromiseLike<FulfilledResult>)
+      | undefined
+      | null,
+    onRejected?:
+      | ((value: any) => RejectedResult | PromiseLike<RejectedResult>)
+      | undefined
+      | null
+  ) {
     promiser(this.endpoint)
-      .then((res) => resolve(res, null))
+      .then((res) => onFulfilled?.(res))
       .catch((err) => {
-        if (typeof reject === 'function') {
-          reject(err);
+        if (typeof onRejected === 'function') {
+          onRejected?.(err);
         } else {
-          resolve(null, err);
+          onFulfilled?.(null);
         }
       });
   }
