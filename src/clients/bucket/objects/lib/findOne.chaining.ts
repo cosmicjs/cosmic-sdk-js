@@ -5,11 +5,9 @@ export default class FindOneChaining extends Chaining {
   async then<FulfilledResult = any, RejectedResult = never>(
     onFulfilled?:
       | ((value: any) => FulfilledResult | PromiseLike<FulfilledResult>)
-      | undefined
       | null,
     onRejected?:
       | ((value: any) => RejectedResult | PromiseLike<RejectedResult>)
-      | undefined
       | null
   ) {
     promiser(this.endpoint)
