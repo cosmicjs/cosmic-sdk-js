@@ -7,18 +7,14 @@ export default class FindOneChaining extends MethodChaining {
     onFulfilled?: PromiseFnType<FulfilledResult>,
     onRejected?: PromiseFnType<RejectedResult>
   ) {
-    promiser(this.endpoint)
-      .then((res: any) =>
-        onFulfilled?.({
-          media: res.media && res.media.length ? res.media[0] : null,
-        })
-      )
-      .catch((err) => {
-        if (typeof onRejected === 'function') {
-          onRejected?.(err);
-        } else {
-          onFulfilled?.(null);
-        }
-      });
+    try {
+      const result: any = await promiser(this.endpoint);
+      const media =
+        result.media && result.media.length ? result.media[0] : null;
+      onFulfilled?.({ media });
+    } catch (err) {
+      onRejected?.(err);
+      throw err;
+    }
   }
 }
