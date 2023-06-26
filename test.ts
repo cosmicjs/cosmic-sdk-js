@@ -10,9 +10,8 @@
 //   let posts;
 //   try {
 //     posts = await cosmic.media
-//       .findOne({ original_name: 'jimmy-philadelphie-unsplash.jpg' })
+//       .findOne({})
 //       .props('url,imgix_url,name');
-
 //     return posts;
 //   } catch (e) {
 //     return e;
@@ -20,6 +19,8 @@
 // }
 
 // console.log(
-//   'HELLO',
-//   run().then((res) => console.log(res))
+//   'TEST LOG _>',
+//   run()
+//     .then((res) => console.log(res))
+//     .catch((err) => console.log(err))
 // );

@@ -1,6 +1,6 @@
 import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
-import { GenericObject } from '../../../types/generic.types';
+import { GenericObject, NonEmptyObject } from '../../../types/generic.types';
 import { requestHandler } from '../../../utils/request.handler';
 import { validateWriteKeyAndReturnHeaders } from '../../../utils/writeKey.validation';
 import FindChaining from './lib/find.chaining';
@@ -21,7 +21,7 @@ export const objectsChainMethods = (
     return new FindChaining(endpoint);
   },
 
-  findOne(query: GenericObject) {
+  findOne<T extends Record<string, unknown>>(query: NonEmptyObject<T>) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/objects?read_key=${bucketConfig.readKey}&limit=1${
