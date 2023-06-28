@@ -129,10 +129,13 @@ Go to the [Cosmic docs](https://docs-v3.cosmicjs.com) to learn more capabilities
 
 For general help, please refer to [the official Cosmic documentation (v3)](https://docs-v3.cosmicjs.com). For additional help, you can use one of these channels to ask a question:
 
-- [Slack](https://www.cosmicjs.com/community) (For live discussions with the Cosmic community and team)
 - [GitHub](https://github.com/cosmicjs/cosmicjs/cosmic-sdk-js) (Bug reports, contributions)
 - [Twitter](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
 - [YouTube](https://www.youtube.com/cosmicjs) (Learn from video tutorials)
+
+## Cosmic support
+
+- [Contact us](https://www.cosmicjs.com/contact) for help with any service questions and custom plan inquiries.
 
 ## License
 
