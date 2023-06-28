@@ -1,4 +1,4 @@
-<a href="https://beta.cosmicjs.com/signup">
+<a href="https://app.cosmicjs.com/signup">
   <img src="https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format" alt="Cosmic dashboard darkmode" />
 </a>
 
@@ -6,7 +6,7 @@
 
 [Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management system) that provides a web dashboard to create content and an API toolkit to deliver content to any website or application. Nearly any type of content can be built using the dashboard and delivered using this SDK.
 
-[Get started free →](https://beta.cosmicjs.com/signup)
+[Get started free →](https://app.cosmicjs.com/signup)
 
 ## Install
 
@@ -30,7 +30,7 @@ import { createBucketClient } from '@cosmicjs/sdk';
 
 ## Authentication
 
-In the [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
+In the [Cosmic admin dashboard](https://app.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
 
 ```jsx
 const cosmic = createBucketClient({
@@ -43,7 +43,7 @@ const cosmic = createBucketClient({
 
 Objects are the basic building blocks of content in Cosmic.
 
-### Get multiple Objects [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-objects)]
+### Get multiple Objects [[see docs](https://www.cosmicjs.com/docs/api/objects#get-objects)]
 
 Use the `objects.find()` method to fetch Objects.
 
@@ -58,7 +58,7 @@ const posts = await cosmic.objects
 
 The above example fetches Objects in the `posts` Object type returning the `title`, `slug`, and `metadata` properties, limiting the response to `10` Objects.
 
-### Get single Object by slug [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#get-a-single-object-by-slug)]
+### Get single Object by slug [[see docs](https://www.cosmicjs.com/docs/api/objects#get-a-single-object-by-slug)]
 
 Use the `objects.findOne()` method with `type` and `slug` to fetch a single Object.
 
@@ -83,7 +83,7 @@ const cosmic = createBucketClient({
 });
 ```
 
-### Create Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#create-an-object)]
+### Create Object [[see docs](https://www.cosmicjs.com/docs/api/objects#create-an-object)]
 
 Use the `objects.insertOne()` method to create an Object.
 
@@ -91,8 +91,8 @@ Use the `objects.insertOne()` method to create an Object.
 await cosmic.objects.insertOne({
   title: 'Blog Post Title',
   type: 'posts',
-  content: 'Here is the blog post content... still learning',
   metadata: {
+    content: 'Here is the blog post content... still learning',
     seo_description: 'This is the blog post SEO description.',
     featured_post: true,
     tags: ['javascript', 'cms'],
@@ -100,20 +100,20 @@ await cosmic.objects.insertOne({
 });
 ```
 
-### Update Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#update-an-object)]
+### Update Object [[see docs](https://www.cosmicjs.com/docs/api/objects#update-an-object)]
 
 Use the `objects.updateOne()` method to update an Object by specifying the Object `id` and include properties that you want to update.
 
 ```jsx
 await cosmic.objects.updateOne('5ff75368c2dfa81a91695cec', {
-  content: 'This is the updated blog post content... I got it now!',
   metadata: {
+    content: 'This is the updated blog post content... I got it now!',
     featured_post: false,
   },
 });
 ```
 
-### Delete Object [[see docs](https://docs-v3.cosmicjs.com/docs/api/objects#delete-an-object)]
+### Delete Object [[see docs](https://www.cosmicjs.com/docs/api/objects#delete-an-object)]
 
 Use the `objects.deleteOne()` method to delete an Object by specifying the Object `id`.
 
@@ -123,16 +123,19 @@ await cosmic.objects.deleteOne('5ff75368c2dfa81a91695cec');
 
 ## Learn more
 
-Go to the [Cosmic docs](https://docs-v3.cosmicjs.com) to learn more capabilities.
+Go to the [Cosmic docs](https://www.cosmicjs.com/docs) to learn more capabilities.
 
 ## Community support
 
-For general help, please refer to [the official Cosmic documentation (v3)](https://docs-v3.cosmicjs.com). For additional help, you can use one of these channels to ask a question:
+For additional help, you can use one of these channels to ask a question:
 
-- [Slack](https://www.cosmicjs.com/community) (For live discussions with the Cosmic community and team)
 - [GitHub](https://github.com/cosmicjs/cosmicjs/cosmic-sdk-js) (Bug reports, contributions)
 - [Twitter](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
 - [YouTube](https://www.youtube.com/cosmicjs) (Learn from video tutorials)
+
+## Cosmic support
+
+- [Contact us](https://www.cosmicjs.com/contact) for help with any service questions and custom plan inquiries.
 
 ## License
 
