@@ -91,8 +91,8 @@ Use the `objects.insertOne()` method to create an Object.
 await cosmic.objects.insertOne({
   title: 'Blog Post Title',
   type: 'posts',
-  content: 'Here is the blog post content... still learning',
   metadata: {
+    content: 'Here is the blog post content... still learning',
     seo_description: 'This is the blog post SEO description.',
     featured_post: true,
     tags: ['javascript', 'cms'],
@@ -106,8 +106,8 @@ Use the `objects.updateOne()` method to update an Object by specifying the Objec
 
 ```jsx
 await cosmic.objects.updateOne('5ff75368c2dfa81a91695cec', {
-  content: 'This is the updated blog post content... I got it now!',
   metadata: {
+    content: 'This is the updated blog post content... I got it now!',
     featured_post: false,
   },
 });
