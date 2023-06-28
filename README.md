@@ -1,4 +1,4 @@
-<a href="https://beta.cosmicjs.com/signup">
+<a href="https://app.cosmicjs.com/signup">
   <img src="https://imgix.cosmicjs.com/ca74e2f0-c8e4-11ed-b01d-23d7b265c299-cosmic-dashboard-dark.png?w=2000&auto=format" alt="Cosmic dashboard darkmode" />
 </a>
 
@@ -6,7 +6,7 @@
 
 [Cosmic](https://www.cosmicjs.com/) is a [headless CMS](https://www.cosmicjs.com/headless-cms) (content management system) that provides a web dashboard to create content and an API toolkit to deliver content to any website or application. Nearly any type of content can be built using the dashboard and delivered using this SDK.
 
-[Get started free →](https://beta.cosmicjs.com/signup)
+[Get started free →](https://app.cosmicjs.com/signup)
 
 ## Install
 
@@ -30,7 +30,7 @@ import { createBucketClient } from '@cosmicjs/sdk';
 
 ## Authentication
 
-In the [Cosmic admin dashboard](https://beta.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
+In the [Cosmic admin dashboard](https://app.cosmicjs.com/login) go to _Bucket > Settings > API Access_ and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
 
 ```jsx
 const cosmic = createBucketClient({
