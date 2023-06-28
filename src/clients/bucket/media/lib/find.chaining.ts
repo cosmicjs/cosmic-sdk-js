@@ -1,5 +1,5 @@
 import { PromiseFnType } from '../../../../types/promise.types';
-import { promiser } from '../../../../utils/request.promiser';
+import { promiserTryCatchWrapper } from '../../../../utils/request.promiser';
 import MethodChaining from '../../lib/methodChaining';
 
 export default class FindChaining extends MethodChaining {
@@ -12,14 +12,8 @@ export default class FindChaining extends MethodChaining {
     onFulfilled?: PromiseFnType<FulfilledResult>,
     onRejected?: PromiseFnType<RejectedResult>
   ) {
-    promiser(this.endpoint)
-      .then((res) => onFulfilled?.(res))
-      .catch((err) => {
-        if (typeof onRejected === 'function') {
-          onRejected?.(err);
-        } else {
-          onFulfilled?.(null);
-        }
-      });
+    await promiserTryCatchWrapper(this.endpoint, onRejected, (result) =>
+      onFulfilled?.(result)
+    );
   }
 }
