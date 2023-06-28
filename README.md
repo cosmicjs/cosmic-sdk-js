@@ -127,7 +127,7 @@ Go to the [Cosmic docs](https://www.cosmicjs.com) to learn more capabilities.
 
 ## Community support
 
-For general help, please refer to [the official Cosmic documentation (v3)](https://www.cosmicjs.com). For additional help, you can use one of these channels to ask a question:
+For general help, please refer to [the official Cosmic documentation](https://www.cosmicjs.com/docs). For additional help, you can use one of these channels to ask a question:
 
 - [GitHub](https://github.com/cosmicjs/cosmicjs/cosmic-sdk-js) (Bug reports, contributions)
 - [Twitter](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
