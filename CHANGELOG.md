@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.8
+
+### Patch Changes
+
+- 70d40fa: Added contributing section in Readme
+
 ## 1.0.7
 
 ### Patch Changes
