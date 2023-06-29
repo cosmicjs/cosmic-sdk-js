@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.9
+
+### Patch Changes
+
+- FIX: Includes type fixes and promise logic updates for catching errors correctly
+
 ## 1.0.8
 
 ### Patch Changes
