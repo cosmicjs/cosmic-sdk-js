@@ -1,6 +1,6 @@
 {
   "name": "@cosmicjs/sdk",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "The official client module for Cosmic. This module helps you easily add dynamic content to your website or application using the Cosmic headless CMS.",
   "keywords": [
     "headlesscms",
@@ -33,6 +33,7 @@
     "lint": "eslint --fix 'src/**/*.{ts,js}'",
     "format": "prettier --write './src/**/*.{ts,js}'",
     "release": "npm run build && changeset publish",
+    "changeset": "changeset",
     "prepare": "husky install",
     "prepublishOnly": "npm run build"
   },
