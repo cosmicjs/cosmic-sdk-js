@@ -16,7 +16,7 @@ export const objectsChainMethods = (
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/objects?read_key=${bucketConfig.readKey}${
-      query ? `&query=${encodeURI(JSON.stringify(query))}` : ''
+      query ? `&query=${encodeURIComponent(JSON.stringify(query))}` : ''
     }`;
     return new FindChaining(endpoint);
   },
@@ -25,7 +25,7 @@ export const objectsChainMethods = (
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/objects?read_key=${bucketConfig.readKey}&limit=1${
-      query ? `&query=${encodeURI(JSON.stringify(query))}` : ''
+      query ? `&query=${encodeURIComponent(JSON.stringify(query))}` : ''
     }`;
     return new FindOneChaining(endpoint);
   },
