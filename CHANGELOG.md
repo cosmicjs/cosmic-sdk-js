@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.10
+
+### Patch Changes
+
+- 41cc4d9: Add support for more characters in query
+
 ## 1.0.9
 
 ### Patch Changes
