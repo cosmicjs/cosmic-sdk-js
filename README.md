@@ -137,6 +137,14 @@ For additional help, you can use one of these channels to ask a question:
 
 - [Contact us](https://www.cosmicjs.com/contact) for help with any service questions and custom plan inquiries.
 
+## Contributing
+
+This project uses [changeset](https://www.npmjs.com/package/@changesets/cli) to manage releases. Follow the following steps to add a changeset:
+
+- Run `npm run changeset` command and select type of release with description of changes.
+- When PR with changeset is merged into `main` branch, Github will create a new PR with correct version change and changelog edits.
+- When `codeowner` merges the generated PR, it will publish the package and create a Github release.
+
 ## License
 
 This project is published under the [MIT](https://github.com/cosmicjs/cosmic-sdk-js/blob/HEAD/LICENSE) license.

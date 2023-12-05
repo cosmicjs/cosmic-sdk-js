@@ -1,5 +1,29 @@
 # @cosmicjs/sdk
 
+## 1.0.10
+
+### Patch Changes
+
+- 41cc4d9: Add support for more characters in query
+
+## 1.0.9
+
+### Patch Changes
+
+- FIX: Includes type fixes and promise logic updates for catching errors correctly
+
+## 1.0.8
+
+### Patch Changes
+
+- 70d40fa: Added contributing section in Readme
+
+## 1.0.7
+
+### Patch Changes
+
+- 914eb19: Edit Readme links
+
 ## 1.0.6
 
 ### Patch Changes

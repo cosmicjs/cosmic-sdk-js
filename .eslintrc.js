@@ -20,6 +20,8 @@ module.exports = {
         semi: true,
       },
     ],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
     'no-console': 0,
     'import/no-cycle': 0,
     'import/prefer-default-export': 0,

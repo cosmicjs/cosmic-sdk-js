@@ -1,12 +1,13 @@
 import FormData from 'form-data';
 import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
-import { GenericObject } from '../../../types/generic.types';
+import { GenericObject, NonEmptyObject } from '../../../types/generic.types';
 import { InsertMediaType } from '../../../types/media.types';
 import { requestHandler } from '../../../utils/request.handler';
 import { validateWriteKeyAndReturnHeaders } from '../../../utils/writeKey.validation';
 import FindChaining from './lib/find.chaining';
 import FindOneChaining from './lib/findOne.chaining';
+import { encodedQueryParam } from '../../../utils/generic.utils';
 
 let headers: GenericObject;
 
@@ -14,21 +15,19 @@ export const mediaChainMethods = (
   bucketConfig: BucketConfig,
   apiConfig: APIConfig
 ) => ({
-  find(query: GenericObject) {
+  find(query?: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
-    }/media?read_key=${bucketConfig.readKey}${
-      query ? `&query=${encodeURI(JSON.stringify(query))}` : ''
-    }`;
+    }/media?read_key=${bucketConfig.readKey}${encodedQueryParam(query)}`;
     return new FindChaining(endpoint);
   },
 
-  findOne(query: GenericObject) {
+  findOne<T extends Record<string, unknown>>(query: NonEmptyObject<T>) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
-    }/media?read_key=${bucketConfig.readKey}&limit=1${
-      query ? `&query=${encodeURI(JSON.stringify(query))}` : ''
-    }`;
+    }/media?read_key=${bucketConfig.readKey}&limit=1${encodedQueryParam(
+      query
+    )}`;
     return new FindOneChaining(endpoint);
   },
 

@@ -1,4 +1,5 @@
-import { promiser } from '../../../../utils/request.promiser';
+import { PromiseFnType } from '../../../../types/promise.types';
+import { promiserTryCatchWrapper } from '../../../../utils/request.promiser';
 import Chaining from './chaining';
 
 export default class FindChaining extends Chaining {
@@ -7,15 +8,12 @@ export default class FindChaining extends Chaining {
     return this;
   }
 
-  async then(resolve: any, reject: any) {
-    promiser(this.endpoint)
-      .then((res) => resolve(res, null))
-      .catch((err) => {
-        if (typeof reject === 'function') {
-          reject(err);
-        } else {
-          resolve(null, err);
-        }
-      });
+  async then<FulfilledResult = any, RejectedResult = never>(
+    onFulfilled?: PromiseFnType<FulfilledResult>,
+    onRejected?: PromiseFnType<RejectedResult>
+  ) {
+    await promiserTryCatchWrapper(this.endpoint, onRejected, (res) =>
+      onFulfilled?.(res)
+    );
   }
 }
