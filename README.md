@@ -10,12 +10,12 @@
 
 ## Install
 
-Install the Cosmic JavaScript SDK.
+Install the Cosmic JavaScript SDK. We recommend using the [bun](https://bun.sh) package manager.
 
 ```bash
-yarn add @cosmicjs/sdk
+bun add @cosmicjs/sdk
 # OR
-pnpm add @cosmicjs/sdk
+yarn add @cosmicjs/sdk
 # OR
 npm install @cosmicjs/sdk
 ```
