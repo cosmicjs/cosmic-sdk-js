@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.0.11
+
+### Patch Changes
+
+- 3e1bb28: edit readme to use bun
+
 ## 1.0.10
 
 ### Patch Changes
