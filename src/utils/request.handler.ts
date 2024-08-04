@@ -1,39 +1,38 @@
-import axios, { AxiosRequestConfig, Method } from 'axios';
+import { GenericObject } from '../types/generic.types';
 
 /**
- * Initialize the API with the given config.
- * @returns None
- */
-export const init = () => {
-  // Accept Encoding in Node
-  if (typeof window === 'undefined') {
-    axios.defaults.headers.common['Accept-Encoding'] = 'gzip, deflate';
-  }
-};
-
-/**
- * A wrapper around axios that handles the request and response.
+ * A wrapper around fetch that handles the request and response.
  * @param method - The HTTP method to use.
  * @param url - The URL to send the request to.
  * @param data - The data to send with the request.
  * @param headers - The headers to send with the request.
  * @returns The response from the server.
  */
-export const requestHandler = (
+export async function requestHandler(
   method: string,
   url: string,
-  data?: any,
-  headers?: any
-) => {
-  const config: AxiosRequestConfig = {
-    method: method as Method,
-    url,
-    data,
+  data?: BodyInit | GenericObject | null,
+  headers: Record<string, string> = {}
+) {
+  const body =
+    typeof data === 'object' &&
+    data != null &&
+    data.constructor.name === 'FormData'
+      ? (data as FormData)
+      : JSON.stringify(data);
+
+  const config = {
+    method,
     headers,
+    body,
   };
-  return axios(config)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw error.response ? error.response.data : error.response;
-    });
-};
+
+  if (typeof window === 'undefined') {
+    config.headers['Accept-Encoding'] = 'gzip, deflate';
+  }
+
+  return fetch(url, config).then((response) => {
+    if (response.ok) return response.json();
+    throw response.json();
+  });
+}

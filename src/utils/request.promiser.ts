@@ -1,13 +1,6 @@
 import HTTP_METHODS from '../constants/httpMethods.constants';
 import { PromiseFnType } from '../types/promise.types';
-import { requestPromiseHandler } from './request.promise.handler';
-
-export const promiser = (endpoint: string) =>
-  new Promise((resolve, reject) => {
-    requestPromiseHandler(HTTP_METHODS.GET, endpoint)
-      .then((response) => resolve(response.data))
-      .catch((err) => reject(err.response ? err.response.data : err.response));
-  });
+import { requestHandler } from './request.handler';
 
 export const promiserTryCatchWrapper = async (
   endpoint: string,
@@ -15,7 +8,7 @@ export const promiserTryCatchWrapper = async (
   cb: (result: any) => void
 ) => {
   try {
-    const result: any = await promiser(endpoint);
+    const result = await requestHandler(HTTP_METHODS.GET, endpoint);
     cb(result);
   } catch (err) {
     if (onRejected && typeof onRejected === 'function') {

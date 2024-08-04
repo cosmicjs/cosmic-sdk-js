@@ -1,4 +1,3 @@
-import FormData from 'form-data';
 import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
 import { GenericObject, NonEmptyObject } from '../../../types/generic.types';
@@ -51,29 +50,13 @@ export const mediaChainMethods = (
     if (params.trigger_webhook) {
       data.append('trigger_webhook', params.trigger_webhook.toString());
     }
-    const getHeaders = (form: FormData): Promise<GenericObject> =>
-      new Promise((resolve, reject) => {
-        if (params.media.buffer) {
-          form.getLength((err, length) => {
-            if (err) reject(err);
-            const h = { 'Content-Length': length, ...form.getHeaders() };
-            resolve(h);
-          });
-        } else {
-          resolve({ 'Content-Type': 'multipart/form-data' });
-        }
-      });
-    return getHeaders(data)
-      .then((h) => {
-        const headersObj = h;
-        if (bucketConfig.writeKey) {
-          headersObj.Authorization = `Bearer ${bucketConfig.writeKey}`;
-        }
-        return requestHandler(HTTP_METHODS.POST, endpoint, data, headersObj);
-      })
-      .catch((error) => {
-        throw error.response.data;
-      });
+
+    const headersObj: HeadersInit = {};
+    if (bucketConfig.writeKey) {
+      headersObj.Authorization = `Bearer ${bucketConfig.writeKey}`;
+    }
+
+    return requestHandler(HTTP_METHODS.POST, endpoint, data, headersObj);
   },
 
   async updateOne(id: string, updates: GenericObject) {
