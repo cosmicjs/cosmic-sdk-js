@@ -15,4 +15,12 @@ export default class Chaining extends MethodChaining {
     this.endpoint += `&after=${after}`;
     return this;
   }
+
+  options(options: string) {
+    if (options.includes('full_media_data')) {
+      // eslint-disable-next-line no-underscore-dangle
+      this._options = 'full_media_data';
+    }
+    return this;
+  }
 }
