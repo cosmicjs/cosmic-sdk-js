@@ -27,7 +27,7 @@ const mapMediaDataToResponse = (response: any, mediaData: any[]) => {
       Object.keys(obj).forEach((key) => {
         if (obj[key] && typeof obj[key] === 'object') {
           if (obj[key].url && obj[key].imgix_url) {
-            const filename = obj[key].url.split('/').pop();
+            const filename = obj[key].url.split('?')[0].split('/').pop();
             if (mediaMap.has(filename)) {
               // eslint-disable-next-line no-param-reassign
               obj[`${key}`] = mediaMap.get(filename);
