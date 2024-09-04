@@ -17,7 +17,7 @@ const extractMediaFiles = (obj: any): string[] => {
   JSON.stringify(obj, (_, value) => {
     if (value && typeof value === 'object') {
       if (value.url && value.imgix_url) {
-        mediaFiles.push(value.url.split('/').pop());
+        mediaFiles.push(value.url.split('/').pop().split('?')[0]);
       }
     }
     return value;
@@ -37,7 +37,7 @@ const mapMediaDataToResponse = (
       Object.keys(obj).forEach((key) => {
         if (obj[key] && typeof obj[key] === 'object') {
           if (obj[key].url && obj[key].imgix_url) {
-            const filename = obj[key].url.split('?')[0].split('/').pop();
+            const filename = obj[key].url.split('/').pop().split('?')[0];
             if (mediaMap.has(filename)) {
               // eslint-disable-next-line no-param-reassign
               if (!props.includes('name')) {
