@@ -24,10 +24,11 @@ export default class FindChaining extends Chaining {
   ) {
     await promiserTryCatchWrapper(this.endpoint, onRejected, async (res) => {
       // eslint-disable-next-line no-underscore-dangle
-      if (this._options.includes('full_media_data')) {
+      if (this.opts && this.opts.media && res.objects) {
         res.objects = await addFullMediaData(
           res.objects,
-          createBucketClient(this.bucketConfig)
+          createBucketClient(this.bucketConfig),
+          this.opts.media.props
         );
       }
       onFulfilled?.(res);

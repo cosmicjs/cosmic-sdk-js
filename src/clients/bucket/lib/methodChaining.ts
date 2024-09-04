@@ -1,7 +1,7 @@
 export default class MethodChaining {
   endpoint: string = '';
 
-  _options: string = '';
+  opts: any;
 
   constructor(endpoint: string) {
     this.endpoint = endpoint;

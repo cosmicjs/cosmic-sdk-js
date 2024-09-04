@@ -1,8 +1,10 @@
-const fetchMediaData = async (cosmic: any, filenames: string[]) => {
+const fetchMediaData = async (cosmic: any, filenames: string[], props) => {
   const query = {
     name: { $in: filenames },
   };
-  const { media } = await cosmic.media.find(query);
+  const { media } = await cosmic.media
+    .find(query)
+    .props(!props || props === 'all' ? '' : `name,url,imgix_url,${props}`);
   return media;
 };
 
@@ -19,7 +21,11 @@ const extractMediaFiles = (obj: any): string[] => {
   return [...new Set(mediaFiles)];
 };
 
-const mapMediaDataToResponse = (response: any, mediaData: any[]) => {
+const mapMediaDataToResponse = (
+  response: any,
+  mediaData: any[],
+  props: string
+) => {
   const mediaMap = new Map(mediaData.map((item) => [item.name, item]));
 
   const addFullMedia = (obj: any) => {
@@ -30,7 +36,11 @@ const mapMediaDataToResponse = (response: any, mediaData: any[]) => {
             const filename = obj[key].url.split('?')[0].split('/').pop();
             if (mediaMap.has(filename)) {
               // eslint-disable-next-line no-param-reassign
-              obj[`${key}`] = mediaMap.get(filename);
+              if (!props.includes('name')) {
+                delete mediaMap.get(filename).name;
+              }
+              const newObj = { ...mediaMap.get(filename) };
+              Object.assign(obj[key], newObj);
             }
           }
           addFullMedia(obj[key]);
@@ -42,12 +52,12 @@ const mapMediaDataToResponse = (response: any, mediaData: any[]) => {
   addFullMedia(response);
 };
 
-const addFullMediaData = async (response: any, cosmic: any) => {
+const addFullMediaData = async (response: any, cosmic: any, props: string) => {
   const processItem = async (item: any) => {
     const mediaFiles = extractMediaFiles(item);
     if (mediaFiles.length > 0) {
-      const mediaData = await fetchMediaData(cosmic, mediaFiles);
-      mapMediaDataToResponse(item, mediaData);
+      const mediaData = await fetchMediaData(cosmic, mediaFiles, props);
+      mapMediaDataToResponse(item, mediaData, props);
     }
     return item;
   };
