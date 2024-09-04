@@ -1,4 +1,8 @@
-const fetchMediaData = async (cosmic: any, filenames: string[], props) => {
+const fetchMediaData = async (
+  cosmic: any,
+  filenames: string[],
+  props: string
+) => {
   const query = {
     name: { $in: filenames },
   };
