@@ -16,7 +16,7 @@ const extractMediaFiles = (obj: any): string[] => {
   const mediaFiles: string[] = [];
   JSON.stringify(obj, (_, value) => {
     if (value && typeof value === 'object') {
-      if (value.url && value.imgix_url) {
+      if (value.url || value.imgix_url) {
         mediaFiles.push(value.url.split('/').pop().split('?')[0]);
       }
     }
