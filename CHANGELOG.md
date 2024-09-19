@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.2.0
+
+### Minor Changes
+
+- 0042953: Adds: props graph syntax to Objects fetching, media data fetching option
+
 ## 1.0.11
 
 ### Patch Changes
