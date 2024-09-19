@@ -48,9 +48,6 @@ export const mediaChainMethods = (
     if (params.metadata) {
       data.append('metadata', JSON.stringify(params.metadata));
     }
-    if (params.alt_text) {
-      data.append('alt_text', params.alt_text);
-    }
     if (params.trigger_webhook) {
       data.append('trigger_webhook', params.trigger_webhook.toString());
     }

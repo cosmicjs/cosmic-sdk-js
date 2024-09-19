@@ -11,3 +11,5 @@ src
 .prettierrc.js
 .nvmrc
 tsconfig.json
+
+test.*
