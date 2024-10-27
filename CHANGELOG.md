@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.3.0
+
+### Minor Changes
+
+- ad65234: add insert objectRevision method
+
 ## 1.2.0
 
 ### Minor Changes
