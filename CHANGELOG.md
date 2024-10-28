@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.3.1
+
+### Patch Changes
+
+- f8e940a: Added typescript type for add revision method
+
 ## 1.3.0
 
 ### Minor Changes
