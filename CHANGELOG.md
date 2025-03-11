@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.3.2
+
+### Patch Changes
+
+- d3e34f2: Add find and findOne object revision methods
+
 ## 1.3.1
 
 ### Patch Changes
