@@ -131,7 +131,7 @@ For additional help, you can use one of these channels to ask a question:
 
 - [Discord](https://discord.gg/MSCwQ7D6Mg) (Development questions, bug reports)
 - [GitHub](https://github.com/cosmicjs/cosmicjs/cosmic-sdk-js) (Issues, contributions)
-- [Twitter](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
+- [X (formerly Twitter)](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
 - [YouTube](https://www.youtube.com/cosmicjs) (Learn from video tutorials)
 
 ## Cosmic support
