@@ -130,7 +130,7 @@ Go to the [Cosmic docs](https://www.cosmicjs.com/docs) to learn more capabilitie
 For additional help, you can use one of these channels to ask a question:
 
 - [Discord](https://discord.gg/MSCwQ7D6Mg) (Development questions, bug reports)
-- [GitHub](https://github.com/cosmicjs/cosmicjs/cosmic-sdk-js) (Issues, contributions)
+- [GitHub](https://github.com/cosmicjs/cosmic-sdk-js) (Issues, contributions)
 - [X (formerly Twitter)](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
 - [YouTube](https://www.youtube.com/cosmicjs) (Learn from video tutorials)
 
