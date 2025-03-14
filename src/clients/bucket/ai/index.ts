@@ -1,6 +1,6 @@
 import { BucketConfig, APIConfig } from '../../../types/config.types';
 
-interface GenerateTextOptions {
+export interface GenerateTextOptions {
   prompt: string;
   media_url?: string;
   model?: string;
@@ -12,12 +12,12 @@ interface GenerateTextOptions {
   }>;
 }
 
-interface GenerateImageOptions {
+export interface GenerateImageOptions {
   prompt: string;
   model?: string;
 }
 
-interface TextGenerationResponse {
+export interface TextGenerationResponse {
   text: string;
   usage: {
     input_tokens: number;
@@ -25,7 +25,7 @@ interface TextGenerationResponse {
   };
 }
 
-interface ImageGenerationResponse {
+export interface ImageGenerationResponse {
   image: {
     id: string;
     url: string;

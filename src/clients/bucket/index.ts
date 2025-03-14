@@ -5,6 +5,20 @@ import { objectsChainMethods } from './objects';
 import { objectTypesChainMethods } from './objectTypes';
 import { objectRevisionsChainMethods } from './objectRevisions';
 import { aiChainMethods } from './ai';
+import type {
+  GenerateTextOptions,
+  TextGenerationResponse,
+  GenerateImageOptions,
+  ImageGenerationResponse,
+} from './ai';
+
+// Re-export the types
+export type {
+  GenerateTextOptions,
+  TextGenerationResponse,
+  GenerateImageOptions,
+  ImageGenerationResponse,
+};
 
 export const createBucketClient = (config: BucketConfig) => {
   const bucketConfig: BucketConfig = {
