@@ -1,4 +1,5 @@
 import { BucketConfig, APIConfig } from '../../../types/config.types';
+import { requestHandler } from '../../../utils/request.handler';
 
 export interface GenerateTextOptions {
   prompt: string;
@@ -55,37 +56,14 @@ export const aiChainMethods = (
       options: GenerateTextOptions
     ): Promise<TextGenerationResponse> => {
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(options),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to generate text');
-      }
-
-      return response.json();
+      return requestHandler('POST', endpoint, options, headers);
     },
 
     generateImage: async (
       options: GenerateImageOptions
     ): Promise<ImageGenerationResponse> => {
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/image`;
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(options),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to generate image');
-      }
-
-      return response.json();
+      return requestHandler('POST', endpoint, options, headers);
     },
   };
 };
