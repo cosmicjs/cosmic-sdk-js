@@ -127,7 +127,7 @@ Cosmic provides AI-powered text and image generation capabilities through the SD
 
 ### Generate Text [[see docs](https://www.cosmicjs.com/docs/api/ai)]
 
-Use the `ai.generateText()` method to generate text content using AI models.
+Use the `ai.generateText()` method to generate text content using AI models. You must provide either a `prompt` or `messages` parameter.
 
 #### Using a simple prompt:
 

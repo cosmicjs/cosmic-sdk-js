@@ -2,7 +2,7 @@ import { BucketConfig, APIConfig } from '../../../types/config.types';
 import { requestHandler } from '../../../utils/request.handler';
 
 export interface GenerateTextOptions {
-  prompt: string;
+  prompt?: string;
   media_url?: string;
   model?: string;
   max_tokens?: number;
@@ -55,6 +55,9 @@ export const aiChainMethods = (
     generateText: async (
       options: GenerateTextOptions
     ): Promise<TextGenerationResponse> => {
+      if (!options.prompt && !options.messages) {
+        throw new Error('Either prompt or messages must be provided');
+      }
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
       return requestHandler('POST', endpoint, options, headers);
     },
