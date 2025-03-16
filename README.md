@@ -180,6 +180,16 @@ console.log(imageResponse.media.width); // Image width
 console.log(imageResponse.media.height); // Image height
 console.log(imageResponse.media.alt_text); // Alt text for the image
 console.log(imageResponse.revised_prompt); // Potentially revised prompt used by the AI
+
+// Example of using media_url with AI-generated text
+const textWithImageResponse = await cosmic.ai.generateText({
+  prompt: 'Write a product description for a coffee mug',
+  media_url: 'https://imgix.cosmicjs.com/your-image-url.jpg', // URL of an image to reference
+  max_tokens: 500,
+});
+
+console.log(textWithImageResponse.text); // Generated text that references the image
+console.log(textWithImageResponse.usage);
 ```
 
 ## Learn more
