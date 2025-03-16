@@ -160,6 +160,21 @@ console.log(chatResponse.text);
 console.log(chatResponse.usage);
 ```
 
+### Analyze Images and Files
+
+The AI model can analyze images and files when generating text responses. This feature works with both the `prompt` and `messages` approaches.
+
+```jsx
+const textWithImageResponse = await cosmic.ai.generateText({
+  prompt: 'Describe this coffee mug and suggest improvements to its design',
+  media_url: 'https://imgix.cosmicjs.com/your-image-url.jpg',
+  max_tokens: 500,
+});
+
+console.log(textWithImageResponse.text);
+console.log(textWithImageResponse.usage);
+```
+
 ### Generate Image [[see docs](https://www.cosmicjs.com/docs/api/ai)]
 
 Use the `ai.generateImage()` method to create AI-generated images based on text prompts.
@@ -180,16 +195,6 @@ console.log(imageResponse.media.width); // Image width
 console.log(imageResponse.media.height); // Image height
 console.log(imageResponse.media.alt_text); // Alt text for the image
 console.log(imageResponse.revised_prompt); // Potentially revised prompt used by the AI
-
-// Example of using media_url with AI-generated text
-const textWithImageResponse = await cosmic.ai.generateText({
-  prompt: 'Write a product description for a coffee mug',
-  media_url: 'https://imgix.cosmicjs.com/your-image-url.jpg', // URL of an image to reference
-  max_tokens: 500,
-});
-
-console.log(textWithImageResponse.text); // Generated text that references the image
-console.log(textWithImageResponse.usage);
 ```
 
 ## Learn more
