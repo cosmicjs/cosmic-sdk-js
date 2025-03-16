@@ -125,7 +125,7 @@ await cosmic.objects.deleteOne('5ff75368c2dfa81a91695cec');
 
 Cosmic provides AI-powered text and image generation capabilities through the SDK.
 
-### Generate Text [[see docs](https://www.cosmicjs.com/docs/api/ai)]
+### Generate Text [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-text)]
 
 Use the `ai.generateText()` method to generate text content using AI models. You must provide either a `prompt` or `messages` parameter.
 
@@ -175,7 +175,7 @@ console.log(textWithImageResponse.text);
 console.log(textWithImageResponse.usage);
 ```
 
-### Generate Image [[see docs](https://www.cosmicjs.com/docs/api/ai)]
+### Generate Image [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-image)]
 
 Use the `ai.generateImage()` method to create AI-generated images based on text prompts.
 
