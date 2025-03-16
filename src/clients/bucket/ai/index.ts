@@ -16,6 +16,9 @@ export interface GenerateTextOptions {
 export interface GenerateImageOptions {
   prompt: string;
   model?: string;
+  metadata?: Record<string, any>;
+  folder?: string;
+  alt_text?: string;
 }
 
 export interface TextGenerationResponse {
