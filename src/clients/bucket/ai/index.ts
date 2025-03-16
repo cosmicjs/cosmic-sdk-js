@@ -10,6 +10,7 @@ export interface GenerateTextOptions {
   messages?: Array<{
     role: 'user' | 'assistant';
     content: string;
+    media_url?: string;
   }>;
 }
 
