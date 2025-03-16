@@ -167,13 +167,19 @@ Use the `ai.generateImage()` method to create AI-generated images based on text 
 ```jsx
 const imageResponse = await cosmic.ai.generateImage({
   prompt: 'A serene mountain landscape at sunset',
+  // Optional parameters
   metadata: { tags: ['landscape', 'mountains', 'sunset'] },
   folder: 'ai-generated-images',
   alt_text: 'A beautiful mountain landscape with a colorful sunset',
 });
 
-console.log(imageResponse.image.url); // Direct URL to the generated image
-console.log(imageResponse.image.imgix_url); // Imgix-enhanced URL for additional transformations
+// Access the generated image properties
+console.log(imageResponse.media.url); // Direct URL to the generated image
+console.log(imageResponse.media.imgix_url); // Imgix-enhanced URL for additional transformations
+console.log(imageResponse.media.width); // Image width
+console.log(imageResponse.media.height); // Image height
+console.log(imageResponse.media.alt_text); // Alt text for the image
+console.log(imageResponse.revised_prompt); // Potentially revised prompt used by the AI
 ```
 
 ## Learn more

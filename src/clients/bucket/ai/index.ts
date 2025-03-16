@@ -30,13 +30,26 @@ export interface TextGenerationResponse {
 }
 
 export interface ImageGenerationResponse {
-  image: {
+  media: {
     id: string;
+    name: string;
+    original_name: string;
+    size: number;
+    type: string;
+    bucket: string;
+    created_at: string;
+    created_by: string | null;
+    modified_at: string;
+    modified_by: string | null;
+    width: number;
+    height: number;
+    alt_text?: string;
     url: string;
     imgix_url: string;
-    prompt: string;
-    revised_prompt: string;
+    metadata?: Record<string, any>;
+    folder?: string | null;
   };
+  revised_prompt: string;
 }
 
 export const aiChainMethods = (
