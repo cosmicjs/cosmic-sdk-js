@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.4.0
+
+### Minor Changes
+
+- 245eabc: Adds AI methods: generateText and generateImage
+
 ## 1.3.2
 
 ### Patch Changes
