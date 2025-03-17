@@ -121,6 +121,82 @@ Use the `objects.deleteOne()` method to delete an Object by specifying the Objec
 await cosmic.objects.deleteOne('5ff75368c2dfa81a91695cec');
 ```
 
+## AI Capabilities
+
+Cosmic provides AI-powered text and image generation capabilities through the SDK.
+
+### Generate Text [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-text)]
+
+Use the `ai.generateText()` method to generate text content using AI models. You must provide either a `prompt` or `messages` parameter.
+
+#### Using a simple prompt:
+
+```jsx
+const textResponse = await cosmic.ai.generateText({
+  prompt: 'Write a product description for a coffee mug',
+  max_tokens: 500, // optional
+});
+
+console.log(textResponse.text);
+console.log(textResponse.usage); // { input_tokens: 10, output_tokens: 150 }
+```
+
+#### Using messages for chat-based models:
+
+```jsx
+const chatResponse = await cosmic.ai.generateText({
+  messages: [
+    { role: 'user', content: 'Tell me about coffee mugs' },
+    {
+      role: 'assistant',
+      content: 'Coffee mugs are vessels designed to hold hot beverages...',
+    },
+    { role: 'user', content: 'What materials are they typically made from?' },
+  ],
+  max_tokens: 500, // optional
+});
+
+console.log(chatResponse.text);
+console.log(chatResponse.usage);
+```
+
+### Analyze Images and Files
+
+The AI model can analyze images and files when generating text responses. This feature works with both the `prompt` and `messages` approaches.
+
+```jsx
+const textWithImageResponse = await cosmic.ai.generateText({
+  prompt: 'Describe this coffee mug and suggest improvements to its design',
+  media_url: 'https://imgix.cosmicjs.com/your-image-url.jpg',
+  max_tokens: 500,
+});
+
+console.log(textWithImageResponse.text);
+console.log(textWithImageResponse.usage);
+```
+
+### Generate Image [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-image)]
+
+Use the `ai.generateImage()` method to create AI-generated images based on text prompts.
+
+```jsx
+const imageResponse = await cosmic.ai.generateImage({
+  prompt: 'A serene mountain landscape at sunset',
+  // Optional parameters
+  metadata: { tags: ['landscape', 'mountains', 'sunset'] },
+  folder: 'ai-generated-images',
+  alt_text: 'A beautiful mountain landscape with a colorful sunset',
+});
+
+// Access the generated image properties
+console.log(imageResponse.media.url); // Direct URL to the generated image
+console.log(imageResponse.media.imgix_url); // Imgix-enhanced URL for additional transformations
+console.log(imageResponse.media.width); // Image width
+console.log(imageResponse.media.height); // Image height
+console.log(imageResponse.media.alt_text); // Alt text for the image
+console.log(imageResponse.revised_prompt); // Potentially revised prompt used by the AI
+```
+
 ## Learn more
 
 Go to the [Cosmic docs](https://www.cosmicjs.com/docs) to learn more capabilities.
