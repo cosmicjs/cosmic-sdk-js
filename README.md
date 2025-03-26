@@ -178,14 +178,27 @@ const stream = await cosmic.ai.generateText({
 
 // Handle the streaming response
 let fullResponse = '';
+
 stream.on('data', (chunk) => {
-  const data = JSON.parse(chunk.toString());
-  fullResponse += data.text;
-  process.stdout.write(data.text); // Write each chunk as it arrives
+  // Get the string data and handle the SSE format
+  const chunkStr = chunk.toString();
+  const jsonStr = chunkStr.replace(/^data: /, '');
+
+  try {
+    const data = JSON.parse(jsonStr);
+
+    // Get the new text chunk and add it to our full response
+    if (data.text) {
+      fullResponse += data.text;
+      process.stdout.write(data.text);
+    }
+  } catch (error) {
+    console.error('Error parsing chunk:', error);
+  }
 });
 
 stream.on('end', () => {
-  console.error('\nStream completed');
+  console.log('\nStream completed');
   console.log('\nFinal response:', fullResponse);
 });
 
@@ -197,8 +210,57 @@ stream.on('error', (error) => {
 Each chunk in the stream contains:
 
 - `text`: The new text being added
-- `fullText`: The complete text up to this point
-- `token_count`: Number of tokens generated so far
+
+> **Note:** The streaming response follows the Server-Sent Events (SSE) format, with each chunk prefixed by `data: `. This is handled in the example above with the `.replace(/^data: /, '')` line.
+
+> **Note:** Unlike the non-streaming response, usage information is not currently available in the streaming response.
+
+#### Using the simplified streaming API (Anthropic-like):
+
+```jsx
+// Use the simplified stream method
+const stream = await cosmic.ai.stream({
+  messages: [
+    { role: 'user', content: 'Tell me about coffee mugs' },
+    {
+      role: 'assistant',
+      content: 'Coffee mugs are vessels designed to hold hot beverages...',
+    },
+    { role: 'user', content: 'What materials are they typically made from?' },
+  ],
+  max_tokens: 500,
+});
+
+// Handle text chunks as they arrive
+stream.on('text', (text) => {
+  process.stdout.write(text);
+});
+
+// Handle the end of the stream
+stream.on('end', (fullText) => {
+  console.log('\nStream completed');
+  console.log('Final response:', fullText);
+});
+
+// You can also handle both the final text and usage information
+stream.on('complete', ({ text, usage }) => {
+  if (usage) {
+    console.log('Usage information:', usage);
+  }
+});
+
+// Handle any errors
+stream.on('error', (error) => {
+  console.error('Stream error:', error);
+});
+```
+
+This simplified API provides a cleaner interface similar to Anthropic's Claude API, with events for:
+
+- `text`: Emitted for each new piece of text
+- `end`: Emitted when the stream ends, with the full text as an argument
+- `complete`: Emitted with both the full text and usage information (if available)
+- `error`: Emitted if there's an error in the stream
 
 ### Analyze Images and Files
 

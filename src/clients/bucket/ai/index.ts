@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events';
 import { BucketConfig, APIConfig } from '../../../types/config.types';
 import { requestHandler } from '../../../utils/request.handler';
 
@@ -52,6 +53,67 @@ export interface ImageGenerationResponse {
   revised_prompt: string;
 }
 
+/**
+ * A class for handling streaming text generation responses
+ * with an Anthropic-like API.
+ */
+export class TextStreamingResponse extends EventEmitter {
+  private fullText: string = '';
+
+  private usageInfo: any = null;
+
+  constructor(private stream: any) {
+    super();
+    this.setupListeners();
+  }
+
+  private setupListeners() {
+    this.stream.on('data', (chunk: Buffer) => {
+      // Handle SSE format
+      const chunkStr = chunk.toString();
+      const jsonStr = chunkStr.replace(/^data: /, '');
+
+      try {
+        const data = JSON.parse(jsonStr);
+        if (data.text) {
+          this.fullText += data.text;
+          this.emit('text', data.text);
+        }
+
+        if (data.usage) {
+          this.usageInfo = data.usage;
+          this.emit('usage', data.usage);
+        }
+      } catch (error) {
+        // Silently ignore parsing errors
+      }
+    });
+
+    this.stream.on('end', () => {
+      this.emit('end', this.fullText);
+      this.emit('complete', { text: this.fullText, usage: this.usageInfo });
+    });
+
+    this.stream.on('error', (error: Error) => {
+      this.emit('error', error);
+    });
+  }
+
+  /**
+   * Get the full text generated so far
+   */
+  get text(): string {
+    return this.fullText;
+  }
+
+  /**
+   * Get the usage information if available
+   */
+  get usage(): any {
+    return this.usageInfo;
+  }
+}
+
 export const aiChainMethods = (
   bucketConfig: BucketConfig,
   apiConfig: APIConfig
@@ -70,12 +132,44 @@ export const aiChainMethods = (
   return {
     generateText: async (
       options: GenerateTextOptions
-    ): Promise<TextGenerationResponse | any> => {
+    ): Promise<TextGenerationResponse | TextStreamingResponse> => {
       if (!options.prompt && !options.messages) {
         throw new Error('Either prompt or messages must be provided');
       }
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
-      return requestHandler('POST', endpoint, options, headers, options.stream);
+
+      if (options.stream) {
+        const stream = await requestHandler(
+          'POST',
+          endpoint,
+          options,
+          headers,
+          true
+        );
+        return new TextStreamingResponse(stream);
+      }
+
+      return requestHandler('POST', endpoint, options, headers);
+    },
+
+    /**
+     * Stream text generation with an Anthropic-like API
+     */
+    stream: async (
+      options: Omit<GenerateTextOptions, 'stream'>
+    ): Promise<TextStreamingResponse> => {
+      if (!options.prompt && !options.messages) {
+        throw new Error('Either prompt or messages must be provided');
+      }
+      const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
+      const stream = await requestHandler(
+        'POST',
+        endpoint,
+        { ...options, stream: true },
+        headers,
+        true
+      );
+      return new TextStreamingResponse(stream);
     },
 
     generateImage: async (
