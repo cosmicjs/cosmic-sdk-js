@@ -70,12 +70,12 @@ export const aiChainMethods = (
   return {
     generateText: async (
       options: GenerateTextOptions
-    ): Promise<TextGenerationResponse> => {
+    ): Promise<TextGenerationResponse | any> => {
       if (!options.prompt && !options.messages) {
         throw new Error('Either prompt or messages must be provided');
       }
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
-      return requestHandler('POST', endpoint, options, headers);
+      return requestHandler('POST', endpoint, options, headers, options.stream);
     },
 
     generateImage: async (

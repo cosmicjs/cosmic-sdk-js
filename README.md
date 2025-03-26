@@ -160,6 +160,46 @@ console.log(chatResponse.text);
 console.log(chatResponse.usage);
 ```
 
+#### Using streaming for real-time responses:
+
+```jsx
+const stream = await cosmic.ai.generateText({
+  messages: [
+    { role: 'user', content: 'Tell me about coffee mugs' },
+    {
+      role: 'assistant',
+      content: 'Coffee mugs are vessels designed to hold hot beverages...',
+    },
+    { role: 'user', content: 'What materials are they typically made from?' },
+  ],
+  max_tokens: 500,
+  stream: true, // Enable streaming
+});
+
+// Handle the streaming response
+let fullResponse = '';
+stream.on('data', (chunk) => {
+  const data = JSON.parse(chunk.toString());
+  fullResponse += data.text;
+  process.stdout.write(data.text); // Write each chunk as it arrives
+});
+
+stream.on('end', () => {
+  console.error('\nStream completed');
+  console.log('\nFinal response:', fullResponse);
+});
+
+stream.on('error', (error) => {
+  console.error('Stream error:', error);
+});
+```
+
+Each chunk in the stream contains:
+
+- `text`: The new text being added
+- `fullText`: The complete text up to this point
+- `token_count`: Number of tokens generated so far
+
 ### Analyze Images and Files
 
 The AI model can analyze images and files when generating text responses. This feature works with both the `prompt` and `messages` approaches.
