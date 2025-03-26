@@ -213,7 +213,7 @@ Each chunk in the stream contains:
 
 > **Note:** The streaming response follows the Server-Sent Events (SSE) format, with each chunk prefixed by `data: `. This is handled in the example above with the `.replace(/^data: /, '')` line.
 
-#### Using the simplified streaming API (Anthropic-like):
+#### Using the simplified streaming API:
 
 ```jsx
 // Use the simplified stream method
@@ -253,7 +253,7 @@ stream.on('error', (error) => {
 });
 ```
 
-This simplified API provides a cleaner interface similar to Anthropic's Claude API, with events for:
+This simplified API provides a cleaner interface with events for:
 
 - `text`: Emitted for each new piece of text
 - `end`: Emitted when the stream ends, with the full text as an argument
