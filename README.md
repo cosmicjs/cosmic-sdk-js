@@ -213,8 +213,6 @@ Each chunk in the stream contains:
 
 > **Note:** The streaming response follows the Server-Sent Events (SSE) format, with each chunk prefixed by `data: `. This is handled in the example above with the `.replace(/^data: /, '')` line.
 
-> **Note:** Unlike the non-streaming response, usage information is not currently available in the streaming response.
-
 #### Using the simplified streaming API (Anthropic-like):
 
 ```jsx
