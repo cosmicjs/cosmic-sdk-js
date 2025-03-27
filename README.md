@@ -182,6 +182,7 @@ const result = await cosmic.ai.generateText({
 // Cast the result to TextStreamingResponse explicitly
 const stream = result as TextStreamingResponse;
 
+// OPTION 1: Event-based approach
 // Handle the streaming response
 let fullResponse = '';
 
@@ -207,14 +208,53 @@ stream.on('end', (data) => {
 stream.on('error', (error) => {
   console.error('Stream error:', error);
 });
+
+// OPTION 2: For-await loop approach
+// This is an alternative to the event-based approach above
+async function processStream() {
+  let fullResponse = '';
+
+  try {
+    // Use for-await loop to iterate through the stream chunks
+    for await (const chunk of stream) {
+      if (chunk.text) {
+        fullResponse += chunk.text;
+        process.stdout.write(chunk.text);
+      }
+
+      if (chunk.usage) {
+        console.log('\nUsage information:', chunk.usage);
+      }
+
+      if (chunk.end) {
+        console.log('\nReceived end data:', chunk);
+      }
+    }
+
+    console.log('\nStream completed');
+    console.log('\nFull text:', fullResponse);
+  } catch (error) {
+    console.error('Stream error:', error);
+  }
+}
+
+processStream();
 ```
 
-The `TextStreamingResponse` extends EventEmitter and provides these events:
+The `TextStreamingResponse` supports two usage patterns:
 
-- `text`: Emitted for each new piece of text
-- `usage`: Emitted with token usage information
-- `end`: Emitted when the stream ends with the final data
-- `error`: Emitted if there's an error in the stream
+1. **Event-based**: Extends EventEmitter and provides these events:
+
+   - `text`: Emitted for each new piece of text
+   - `usage`: Emitted with token usage information
+   - `end`: Emitted when the stream ends with the final data
+   - `error`: Emitted if there's an error in the stream
+
+2. **AsyncIterator**: Supports for-await loops with chunk objects that may contain:
+   - `text`: A text fragment
+   - `usage`: Token usage information
+   - `end`: Set to true for the final chunk, may contain completion data
+   - `error`: Error information if one occurs
 
 #### Using the simplified streaming API:
 
@@ -231,6 +271,7 @@ const stream = await cosmic.ai.stream({
   max_tokens: 500,
 });
 
+// OPTION 1: Event-based approach
 // Handle text chunks as they arrive
 stream.on('text', (text) => {
   process.stdout.write(text);
@@ -251,14 +292,26 @@ stream.on('end', (data) => {
 stream.on('error', (error) => {
   console.error('Stream error:', error);
 });
+
+// OPTION 2: For-await loop approach
+async function processStream() {
+  try {
+    for await (const chunk of stream) {
+      if (chunk.text) {
+        process.stdout.write(chunk.text);
+      }
+      // Handle other chunk types as needed
+    }
+    console.log('\nStream completed');
+  } catch (error) {
+    console.error('Stream error:', error);
+  }
+}
+
+processStream();
 ```
 
-This simplified API provides a cleaner interface with events for:
-
-- `text`: Emitted for each new piece of text
-- `usage`: Emitted with token usage information
-- `end`: Emitted when the stream ends with data from the server
-- `error`: Emitted if there's an error in the stream
+This simplified API provides the same two usage patterns (event-based and for-await loops) with a more streamlined interface for creating the stream.
 
 ### Analyze Images and Files
 

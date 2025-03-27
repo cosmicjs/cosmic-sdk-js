@@ -120,6 +120,85 @@ export class TextStreamingResponse extends EventEmitter {
   get usage(): any {
     return this.usageInfo;
   }
+
+  /**
+   * Implement AsyncIterator interface to support for-await loops
+   */
+  [Symbol.asyncIterator]() {
+    // Create a queue to store chunks
+    const chunks: Array<{
+      text?: string;
+      usage?: any;
+      end?: boolean;
+      error?: Error;
+    }> = [];
+    let resolvePromise: ((value: IteratorResult<any>) => void) | null = null;
+    let isDone = false;
+    let hasError = false;
+
+    // Set up event listeners
+    this.on('text', (text: string) => {
+      if (resolvePromise) {
+        resolvePromise({ value: { text }, done: false });
+        resolvePromise = null;
+      } else {
+        chunks.push({ text });
+      }
+    });
+
+    this.on('usage', (usage: any) => {
+      if (resolvePromise) {
+        resolvePromise({ value: { usage }, done: false });
+        resolvePromise = null;
+      } else {
+        chunks.push({ usage });
+      }
+    });
+
+    this.on('end', () => {
+      isDone = true;
+      if (resolvePromise) {
+        resolvePromise({ value: undefined, done: true });
+        resolvePromise = null;
+      }
+    });
+
+    this.on('error', (error: Error) => {
+      hasError = true;
+      if (resolvePromise) {
+        resolvePromise({ value: { error }, done: false });
+        resolvePromise = null;
+      } else {
+        chunks.push({ error });
+      }
+    });
+
+    // Return an async iterator
+    return {
+      next: async (): Promise<IteratorResult<any>> => {
+        if (chunks.length > 0) {
+          const chunk = chunks.shift()!;
+          if (chunk.error) {
+            throw chunk.error;
+          }
+          return { value: chunk, done: false };
+        }
+
+        if (isDone) {
+          return { value: undefined, done: true };
+        }
+
+        if (hasError) {
+          throw new Error('Stream encountered an error');
+        }
+
+        // Wait for the next chunk
+        return new Promise<IteratorResult<any>>((resolve) => {
+          resolvePromise = resolve;
+        });
+      },
+    };
+  }
 }
 
 export const aiChainMethods = (
