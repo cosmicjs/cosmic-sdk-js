@@ -163,7 +163,10 @@ console.log(chatResponse.usage);
 #### Using streaming for real-time responses:
 
 ```jsx
-const stream = await cosmic.ai.generateText({
+import { TextStreamingResponse } from '@cosmicjs/sdk';
+
+// Create a streaming response
+const result = await cosmic.ai.generateText({
   messages: [
     { role: 'user', content: 'Tell me about coffee mugs' },
     {
@@ -176,56 +179,55 @@ const stream = await cosmic.ai.generateText({
   stream: true, // Enable streaming
 });
 
+// Cast the result to TextStreamingResponse explicitly
+const stream = result as TextStreamingResponse;
+
 // Handle the streaming response
 let fullResponse = '';
 
-stream.on('data', (chunk) => {
-  // Get the string data and handle the SSE format
-  const chunkStr = chunk.toString();
-  const jsonStr = chunkStr.replace(/^data: /, '');
-
-  try {
-    const data = JSON.parse(jsonStr);
-
-    // Get the new text chunk and add it to our full response
-    if (data.text) {
-      fullResponse += data.text;
-      process.stdout.write(data.text);
-    }
-  } catch (error) {
-    console.error('Error parsing chunk:', error);
-  }
+// Listen for text chunks as they arrive
+stream.on('text', (text) => {
+  fullResponse += text;
+  process.stdout.write(text); // Print text as it arrives
 });
 
-stream.on('end', () => {
+// Usage information is available via the usage event
+stream.on('usage', (usage) => {
+  console.log('Usage information:', usage);
+});
+
+// The end event fires when streaming is complete
+stream.on('end', (data) => {
   console.log('\nStream completed');
-  console.log('\nFinal response:', fullResponse);
+  console.log('Final data:', data);
+  console.log('Complete text:', fullResponse);
 });
 
+// Handle any errors
 stream.on('error', (error) => {
   console.error('Stream error:', error);
 });
 ```
 
-Each chunk in the stream contains:
+The `TextStreamingResponse` extends EventEmitter and provides these events:
 
-- `text`: The new text being added
-
-> **Note:** The streaming response follows the Server-Sent Events (SSE) format, with each chunk prefixed by `data: `. This is handled in the example above with the `.replace(/^data: /, '')` line.
+- `text`: Emitted for each new piece of text
+- `usage`: Emitted with token usage information
+- `end`: Emitted when the stream ends with the final data
+- `error`: Emitted if there's an error in the stream
 
 #### Using the simplified streaming API:
 
 ```jsx
+import { TextStreamingResponse } from '@cosmicjs/sdk';
+
 // Use the simplified stream method
 const stream = await cosmic.ai.stream({
-  messages: [
-    { role: 'user', content: 'Tell me about coffee mugs' },
-    {
-      role: 'assistant',
-      content: 'Coffee mugs are vessels designed to hold hot beverages...',
-    },
-    { role: 'user', content: 'What materials are they typically made from?' },
-  ],
+  prompt: 'Tell me about coffee mugs',
+  // Or use messages array format
+  // messages: [
+  //   { role: 'user', content: 'Tell me about coffee mugs' },
+  // ],
   max_tokens: 500,
 });
 
@@ -234,17 +236,15 @@ stream.on('text', (text) => {
   process.stdout.write(text);
 });
 
-// Handle the end of the stream
-stream.on('end', (fullText) => {
-  console.log('\nStream completed');
-  console.log('Final response:', fullText);
+// Usage information is available via the usage event
+stream.on('usage', (usage) => {
+  console.log('Usage information:', usage);
 });
 
-// You can also handle both the final text and usage information
-stream.on('complete', ({ text, usage }) => {
-  if (usage) {
-    console.log('Usage information:', usage);
-  }
+// The end event provides the data from the server
+stream.on('end', (data) => {
+  console.log('\nStream completed');
+  console.log('Final data:', data);
 });
 
 // Handle any errors
@@ -256,8 +256,8 @@ stream.on('error', (error) => {
 This simplified API provides a cleaner interface with events for:
 
 - `text`: Emitted for each new piece of text
-- `end`: Emitted when the stream ends, with the full text as an argument
-- `complete`: Emitted with both the full text and usage information (if available)
+- `usage`: Emitted with token usage information
+- `end`: Emitted when the stream ends with data from the server
 - `error`: Emitted if there's an error in the stream
 
 ### Analyze Images and Files
