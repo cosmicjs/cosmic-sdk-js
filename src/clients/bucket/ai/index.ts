@@ -75,23 +75,31 @@ export class TextStreamingResponse extends EventEmitter {
 
       try {
         const data = JSON.parse(jsonStr);
+        if (data.error) {
+          this.emit(
+            'error',
+            new Error(data.error.message || 'An error occurred')
+          );
+          return;
+        }
         if (data.text) {
           this.fullText += data.text;
           this.emit('text', data.text);
         }
 
-        if (data.usage) {
-          this.usageInfo = data.usage;
-          this.emit('usage', data.usage);
+        if (data.token_count) {
+          this.usageInfo = data.token_count;
+          this.emit('usage', data.token_count);
+        }
+        if (data.event === 'end') {
+          this.emit('end', data.data);
         }
       } catch (error) {
-        // Silently ignore parsing errors
+        // If we can't parse the chunk, it might be an error message
+        if (chunkStr.includes('error')) {
+          this.emit('error', new Error(chunkStr));
+        }
       }
-    });
-
-    this.stream.on('end', () => {
-      this.emit('end', this.fullText);
-      this.emit('complete', { text: this.fullText, usage: this.usageInfo });
     });
 
     this.stream.on('error', (error: Error) => {
