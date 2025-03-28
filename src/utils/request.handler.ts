@@ -17,20 +17,32 @@ export const init = () => {
  * @param url - The URL to send the request to.
  * @param data - The data to send with the request.
  * @param headers - The headers to send with the request.
- * @returns The response from the server.
+ * @param stream - Whether to stream the response.
+ * @returns The response from the server or a stream of data.
  */
 export const requestHandler = (
   method: string,
   url: string,
   data?: any,
-  headers?: any
+  headers?: any,
+  stream?: boolean
 ) => {
   const config: AxiosRequestConfig = {
     method: method as Method,
     url,
     data,
     headers,
+    responseType: stream ? 'stream' : 'json',
   };
+
+  if (stream) {
+    return axios(config)
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error.response ? error.response.data : error.response;
+      });
+  }
+
   return axios(config)
     .then((response) => response.data)
     .catch((error) => {
