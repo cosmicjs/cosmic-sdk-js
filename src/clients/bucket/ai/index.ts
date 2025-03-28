@@ -58,8 +58,6 @@ export interface ImageGenerationResponse {
  * with an Anthropic-like API.
  */
 export class TextStreamingResponse extends EventEmitter {
-  private fullText: string = '';
-
   private usageInfo: any = null;
 
   constructor(private stream: any) {
@@ -68,36 +66,58 @@ export class TextStreamingResponse extends EventEmitter {
   }
 
   private setupListeners() {
+    let buffer = '';
+
     this.stream.on('data', (chunk: Buffer) => {
-      // Handle SSE format
-      const chunkStr = chunk.toString();
-      const jsonStr = chunkStr.replace(/^data: /, '');
+      // Add the new chunk to the buffer
+      buffer += chunk.toString();
 
-      try {
-        const data = JSON.parse(jsonStr);
-        if (data.error) {
-          this.emit(
-            'error',
-            new Error(data.error.message || 'An error occurred')
-          );
-          return;
-        }
-        if (data.text) {
-          this.fullText += data.text;
-          this.emit('text', data.text);
-        }
+      // Process complete events (each SSE message ends with \n\n)
+      const events = buffer.split('\n\n');
 
-        if (data.token_count) {
-          this.usageInfo = data.token_count;
-          this.emit('usage', data.token_count);
-        }
-        if (data.event === 'end') {
-          this.emit('end', data.data);
-        }
-      } catch (error) {
-        // If we can't parse the chunk, it might be an error message
-        if (chunkStr.includes('error')) {
-          this.emit('error', new Error(chunkStr));
+      // Keep the last potentially incomplete event in the buffer
+      buffer = events.pop() || '';
+
+      // Process each complete event
+      for (const event of events) {
+        if (event.trim()) {
+          // Handle SSE format - each line starts with 'data: '
+          const lines = event
+            .split('\n')
+            .filter((line) => line.startsWith('data: '))
+            .map((line) => line.replace(/^data: /, ''));
+
+          for (const jsonStr of lines) {
+            try {
+              const data = JSON.parse(jsonStr);
+
+              if (data.error) {
+                this.emit(
+                  'error',
+                  new Error(data.error.message || 'An error occurred')
+                );
+              } else {
+                // Only process non-error data
+                if (data.text) {
+                  this.emit('text', data.text);
+                }
+
+                if (data.token_count) {
+                  this.usageInfo = data.token_count;
+                  this.emit('usage', data.token_count);
+                }
+
+                if (data.event === 'end') {
+                  this.emit('end', data.data);
+                }
+              }
+            } catch (error) {
+              // If we can't parse the chunk, it might be an error message
+              if (jsonStr.includes('error')) {
+                this.emit('error', new Error(jsonStr));
+              }
+            }
+          }
         }
       }
     });
@@ -105,13 +125,34 @@ export class TextStreamingResponse extends EventEmitter {
     this.stream.on('error', (error: Error) => {
       this.emit('error', error);
     });
-  }
 
-  /**
-   * Get the full text generated so far
-   */
-  get text(): string {
-    return this.fullText;
+    // Handle stream end
+    this.stream.on('end', () => {
+      // Process any remaining data in the buffer
+      if (buffer.trim()) {
+        const lines = buffer
+          .split('\n')
+          .filter((line) => line.startsWith('data: '))
+          .map((line) => line.replace(/^data: /, ''));
+
+        for (const jsonStr of lines) {
+          try {
+            const data = JSON.parse(jsonStr);
+            if (data.text) {
+              this.emit('text', data.text);
+            }
+            if (data.event === 'end') {
+              this.emit('end', data.data);
+            }
+          } catch (error) {
+            // Ignore parsing errors at the end of the stream
+          }
+        }
+      }
+
+      // If we haven't already emitted an end event, do it now
+      this.emit('end', { usage: this.usageInfo });
+    });
   }
 
   /**
