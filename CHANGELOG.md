@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.5.1
+
+### Patch Changes
+
+- 4055f2d: edit: readme update
+
 ## 1.5.0
 
 ### Minor Changes
