@@ -165,153 +165,70 @@ console.log(chatResponse.usage);
 ```jsx
 import { TextStreamingResponse } from '@cosmicjs/sdk';
 
-// Create a streaming response
+// Enable streaming with the stream: true parameter
 const result = await cosmic.ai.generateText({
-  messages: [
-    { role: 'user', content: 'Tell me about coffee mugs' },
-    {
-      role: 'assistant',
-      content: 'Coffee mugs are vessels designed to hold hot beverages...',
-    },
-    { role: 'user', content: 'What materials are they typically made from?' },
-  ],
+  prompt: 'Tell me about coffee mugs',
+  // or use messages array format
   max_tokens: 500,
-  stream: true, // Enable streaming
+  stream: true // Enable streaming
 });
 
-// Cast the result to TextStreamingResponse explicitly
+// Cast the result to TextStreamingResponse
 const stream = result as TextStreamingResponse;
 
-// OPTION 1: Event-based approach
-// Handle the streaming response
+// Option 1: Event-based approach
 let fullResponse = '';
-
-// Listen for text chunks as they arrive
 stream.on('text', (text) => {
   fullResponse += text;
-  process.stdout.write(text); // Print text as it arrives
+  process.stdout.write(text); // Display text as it arrives
 });
+stream.on('usage', (usage) => console.log('Usage:', usage));
+stream.on('end', (data) => console.log('Complete:', fullResponse));
+stream.on('error', (error) => console.error('Error:', error));
 
-// Usage information is available via the usage event
-stream.on('usage', (usage) => {
-  console.log('Usage information:', usage);
-});
-
-// The end event fires when streaming is complete
-stream.on('end', (data) => {
-  console.log('\nStream completed');
-  console.log('Final data:', data);
-  console.log('Complete text:', fullResponse);
-});
-
-// Handle any errors
-stream.on('error', (error) => {
-  console.error('Stream error:', error);
-});
-
-// OPTION 2: For-await loop approach
-// This is an alternative to the event-based approach above
+// Option 2: For-await loop approach
 async function processStream() {
   let fullResponse = '';
-
   try {
-    // Use for-await loop to iterate through the stream chunks
     for await (const chunk of stream) {
       if (chunk.text) {
         fullResponse += chunk.text;
         process.stdout.write(chunk.text);
       }
-
-      if (chunk.usage) {
-        console.log('\nUsage information:', chunk.usage);
-      }
-
-      if (chunk.end) {
-        console.log('\nReceived end data:', chunk);
-      }
     }
-
-    console.log('\nStream completed');
-    console.log('\nFull text:', fullResponse);
+    console.log('\nComplete text:', fullResponse);
   } catch (error) {
-    console.error('Stream error:', error);
+    console.error('Error:', error);
   }
 }
+```
 
-processStream();
+#### Using the simplified stream method
+
+```jsx
+// Simplified streaming method
+const stream = await cosmic.ai.stream({
+  prompt: 'Tell me about coffee mugs',
+  max_tokens: 500,
+});
+
+// Process stream using events or for-await loop as shown above
 ```
 
 The `TextStreamingResponse` supports two usage patterns:
 
-1. **Event-based**: Extends EventEmitter and provides these events:
+1. **Event-based**: Extends EventEmitter with these events:
 
-   - `text`: Emitted for each new piece of text
-   - `usage`: Emitted with token usage information
-   - `end`: Emitted when the stream ends with the final data
-   - `error`: Emitted if there's an error in the stream
-
-2. **AsyncIterator**: Supports for-await loops with chunk objects that may contain:
-   - `text`: A text fragment
+   - `text`: New text fragments
    - `usage`: Token usage information
-   - `end`: Set to true for the final chunk, may contain completion data
-   - `error`: Error information if one occurs
+   - `end`: Final data when stream completes
+   - `error`: Stream errors
 
-#### Using the simplified streaming API:
-
-```jsx
-import { TextStreamingResponse } from '@cosmicjs/sdk';
-
-// Use the simplified stream method
-const stream = await cosmic.ai.stream({
-  prompt: 'Tell me about coffee mugs',
-  // Or use messages array format
-  // messages: [
-  //   { role: 'user', content: 'Tell me about coffee mugs' },
-  // ],
-  max_tokens: 500,
-});
-
-// OPTION 1: Event-based approach
-// Handle text chunks as they arrive
-stream.on('text', (text) => {
-  process.stdout.write(text);
-});
-
-// Usage information is available via the usage event
-stream.on('usage', (usage) => {
-  console.log('Usage information:', usage);
-});
-
-// The end event provides the data from the server
-stream.on('end', (data) => {
-  console.log('\nStream completed');
-  console.log('Final data:', data);
-});
-
-// Handle any errors
-stream.on('error', (error) => {
-  console.error('Stream error:', error);
-});
-
-// OPTION 2: For-await loop approach
-async function processStream() {
-  try {
-    for await (const chunk of stream) {
-      if (chunk.text) {
-        process.stdout.write(chunk.text);
-      }
-      // Handle other chunk types as needed
-    }
-    console.log('\nStream completed');
-  } catch (error) {
-    console.error('Stream error:', error);
-  }
-}
-
-processStream();
-```
-
-This simplified API provides the same two usage patterns (event-based and for-await loops) with a more streamlined interface for creating the stream.
+2. **AsyncIterator**: For for-await loops, with chunk objects containing:
+   - `text`: Text fragments
+   - `usage`: Token usage information
+   - `end`: Set to true for the final chunk
+   - `error`: Error information
 
 ### Analyze Images and Files
 
