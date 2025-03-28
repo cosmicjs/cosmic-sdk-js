@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.5.0
+
+### Minor Changes
+
+- fc44e2a: feat: Add real-time text streaming support for AI text generation
+
 ## 1.4.0
 
 ### Minor Changes
