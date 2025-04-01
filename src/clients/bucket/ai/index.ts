@@ -22,13 +22,15 @@ export interface GenerateImageOptions {
   alt_text?: string;
 }
 
-export interface TextGenerationResponse {
+export interface TextGenerationResponseBase {
   text: string;
   usage: {
     input_tokens: number;
     output_tokens: number;
   };
 }
+
+export type TextGenerationResponse = TextGenerationResponseBase;
 
 export interface ImageGenerationResponse {
   media: {
@@ -57,8 +59,13 @@ export interface ImageGenerationResponse {
  * A class for handling streaming text generation responses
  * with an Anthropic-like API.
  */
-export class TextStreamingResponse extends EventEmitter {
+export class TextStreamingResponse
+  extends EventEmitter
+  implements TextGenerationResponseBase
+{
   private usageInfo: any = null;
+
+  text: string = '';
 
   constructor(private stream: any) {
     super();
@@ -99,6 +106,7 @@ export class TextStreamingResponse extends EventEmitter {
               } else {
                 // Only process non-error data
                 if (data.text) {
+                  this.text += data.text;
                   this.emit('text', data.text);
                 }
 
@@ -139,6 +147,7 @@ export class TextStreamingResponse extends EventEmitter {
           try {
             const data = JSON.parse(jsonStr);
             if (data.text) {
+              this.text += data.text;
               this.emit('text', data.text);
             }
             if (data.event === 'end') {
