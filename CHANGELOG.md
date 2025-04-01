@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.5.2
+
+### Patch Changes
+
+- 874ccd9: fix: type issue for streaming response
+
 ## 1.5.1
 
 ### Patch Changes
