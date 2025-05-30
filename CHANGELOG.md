@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.5.5
+
+### Patch Changes
+
+- 6c749a2: fix: browser fix for EventEmitter
+
 ## 1.5.2
 
 ### Patch Changes
