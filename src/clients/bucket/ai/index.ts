@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from '../../../utils/events';
 import { BucketConfig, APIConfig } from '../../../types/config.types';
 import { requestHandler } from '../../../utils/request.handler';
 
