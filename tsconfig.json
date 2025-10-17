@@ -8,5 +8,11 @@
     "skipLibCheck": true, /* Skip type checking all .d.ts files. */
     "noUncheckedIndexedAccess": true,
     "noEmit": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples",
+    "docs"
+  ]
 }

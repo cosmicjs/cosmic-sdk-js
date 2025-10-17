@@ -1,5 +1,16 @@
 # @cosmicjs/sdk
 
+## 1.5.6
+
+### Patch Changes
+
+- fix: Environment-aware media upload to resolve "e.on is not a function" error in Next.js
+  - Fixes media uploads in Next.js API routes by properly detecting Node.js vs browser environments
+  - Maintains full backwards compatibility with existing `{ buffer, originalname }` format
+  - Adds support for direct Buffer uploads with optional `filename` and `contentType` parameters
+  - Improved type safety with proper TypeScript definitions for media upload formats
+  - See `docs/MEDIA_UPLOAD_FIX.md` for detailed implementation notes and migration examples
+
 ## 1.5.5
 
 ### Patch Changes
