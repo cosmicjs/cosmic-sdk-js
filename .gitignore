@@ -8,3 +8,5 @@ dist
 
 test.*
 test-types.ts
+
+examples/*
