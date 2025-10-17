@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- 7ac818a: fix: implement environment-aware media upload handling for Node.js and browser
+
+## 1.5.6
+
+### Patch Changes
+
 - fix: Environment-aware media upload to resolve "e.on is not a function" error in Next.js
   - Fixes media uploads in Next.js API routes by properly detecting Node.js vs browser environments
   - Maintains full backwards compatibility with existing `{ buffer, originalname }` format
