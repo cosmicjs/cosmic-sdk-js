@@ -9,6 +9,8 @@ export type {
   TextGenerationResponse,
   GenerateImageOptions,
   ImageGenerationResponse,
+  GenerateVideoOptions,
+  VideoGenerationResponse,
 } from '../clients/bucket/ai';
 
 // Export the TextStreamingResponse class

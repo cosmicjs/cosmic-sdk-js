@@ -22,6 +22,16 @@ export interface GenerateImageOptions {
   alt_text?: string;
 }
 
+export interface GenerateVideoOptions {
+  prompt: string;
+  model?: 'veo-3.1-fast-generate-preview' | 'veo-3.1-generate-preview';
+  duration?: 4 | 6 | 8;
+  resolution?: '720p' | '1080p';
+  reference_images?: string[];
+  metadata?: Record<string, any>;
+  folder?: string;
+}
+
 export interface TextGenerationResponseBase {
   text: string;
   usage: {
@@ -53,6 +63,38 @@ export interface ImageGenerationResponse {
     folder?: string | null;
   };
   revised_prompt: string;
+}
+
+export interface VideoGenerationResponse {
+  media: {
+    id: string;
+    name: string;
+    original_name: string;
+    size: number;
+    type: string;
+    bucket: string;
+    created_at: string;
+    created_by: string | null;
+    modified_at: string;
+    modified_by: string | null;
+    alt_text?: string;
+    url: string;
+    imgix_url: string;
+    location?: string;
+    metadata?: {
+      duration: number;
+      resolution: string;
+      generation_time_seconds: number;
+      [key: string]: any;
+    };
+    folder?: string | null;
+  };
+  usage: {
+    input_tokens: number;
+    output_tokens: number;
+    total_tokens: number;
+  };
+  generation_time_seconds: number;
 }
 
 /**
@@ -313,6 +355,16 @@ export const aiChainMethods = (
       options: GenerateImageOptions
     ): Promise<ImageGenerationResponse> => {
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/image`;
+      return requestHandler('POST', endpoint, options, headers);
+    },
+
+    generateVideo: async (
+      options: GenerateVideoOptions
+    ): Promise<VideoGenerationResponse> => {
+      if (!options.prompt) {
+        throw new Error('prompt is required');
+      }
+      const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/video`;
       return requestHandler('POST', endpoint, options, headers);
     },
   };
