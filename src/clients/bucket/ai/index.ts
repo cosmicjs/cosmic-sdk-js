@@ -32,6 +32,14 @@ export interface GenerateVideoOptions {
   folder?: string;
 }
 
+export interface ExtendVideoOptions {
+  prompt: string;
+  media_id: string;
+  model?: 'veo-3.1-fast-generate-preview' | 'veo-3.1-generate-preview';
+  metadata?: Record<string, any>;
+  folder?: string;
+}
+
 export interface TextGenerationResponseBase {
   text: string;
   usage: {
@@ -95,6 +103,44 @@ export interface VideoGenerationResponse {
     total_tokens: number;
   };
   generation_time_seconds: number;
+}
+
+export interface VideoExtensionResponse {
+  media: {
+    id: string;
+    name: string;
+    original_name: string;
+    size: number;
+    type: string;
+    bucket: string;
+    created_at: string;
+    created_by: string | null;
+    modified_at: string;
+    modified_by: string | null;
+    alt_text?: string;
+    url: string;
+    imgix_url: string;
+    location?: string;
+    metadata?: {
+      duration: number;
+      resolution: string;
+      generation_time_seconds: number;
+      is_extension: boolean;
+      source_media_id: string;
+      source_veo_uri: string;
+      veo_file_uri: string;
+      [key: string]: any;
+    };
+    folder?: string | null;
+  };
+  usage: {
+    input_tokens: number;
+    output_tokens: number;
+    total_tokens: number;
+  };
+  generation_time_seconds: number;
+  source_media_id: string;
+  is_extension: boolean;
 }
 
 /**
@@ -365,6 +411,21 @@ export const aiChainMethods = (
         throw new Error('prompt is required');
       }
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/video`;
+      return requestHandler('POST', endpoint, options, headers);
+    },
+
+    extendVideo: async (
+      options: ExtendVideoOptions
+    ): Promise<VideoExtensionResponse> => {
+      if (!options.prompt) {
+        throw new Error('prompt is required');
+      }
+      if (!options.media_id) {
+        throw new Error(
+          'media_id is required - provide the ID of the Veo video to extend'
+        );
+      }
+      const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/video/extend`;
       return requestHandler('POST', endpoint, options, headers);
     },
   };

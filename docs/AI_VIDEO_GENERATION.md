@@ -83,6 +83,66 @@ interface VideoGenerationResponse {
 }
 ```
 
+### `extendVideo(options)`
+
+Extend a previously generated Veo video by creating a new 8-second clip that continues from the final second of the original video.
+
+#### Parameters
+
+```typescript
+interface ExtendVideoOptions {
+  prompt: string;                                             // Required - how to continue the video
+  media_id: string;                                          // Required - ID of the Veo video to extend
+  model?: 'veo-3.1-fast-generate-preview'                   // Optional (default: fast)
+        | 'veo-3.1-generate-preview';
+  metadata?: Record<string, any>;                            // Optional
+  folder?: string;                                           // Optional
+}
+```
+
+#### Response
+
+```typescript
+interface VideoExtensionResponse {
+  media: {
+    id: string;
+    name: string;
+    url: string;                    // Direct CDN URL
+    imgix_url: string;
+    type: string;                   // 'video/mp4'
+    size: number;
+    bucket: string;
+    created_at: string;
+    metadata?: {
+      duration: number;             // Always 8 seconds for extensions
+      resolution: string;           // Always '720p' for extensions
+      generation_time_seconds: number;
+      is_extension: boolean;        // true
+      source_media_id: string;      // ID of the original video
+      veo_file_uri: string;         // URI for further extensions
+      [key: string]: any;
+    };
+    folder?: string | null;
+    alt_text?: string;
+  };
+  usage: {
+    input_tokens: number;
+    output_tokens: number;          // 288,000 (Fast) or 768,000 (Standard)
+    total_tokens: number;
+  };
+  generation_time_seconds: number;
+  source_media_id: string;          // ID of the original video
+  is_extension: boolean;            // true
+}
+```
+
+#### Video Extension Limitations
+
+- **Duration**: Extensions are always 8 seconds
+- **Resolution**: Extensions are always 720p (even if the original was 1080p)
+- **Source**: Only Veo-generated videos can be extended (must have `veo_file_uri` in metadata)
+- **Chaining**: Extended videos can also be extended, enabling creation of longer narratives
+
 ## Examples
 
 ### Basic Video Generation
@@ -164,6 +224,56 @@ const video = await cosmic.ai.generateVideo({
 })
 ```
 
+### Video Extension
+
+Extend a previously generated Veo video to create longer content:
+
+```typescript
+// First, generate an initial video
+const initialVideo = await cosmic.ai.generateVideo({
+  prompt: 'A calico kitten sitting peacefully in golden sunlight',
+  duration: 8,
+  resolution: '720p'
+})
+
+// Then extend it with a continuation
+const extendedVideo = await cosmic.ai.extendVideo({
+  media_id: initialVideo.media.id,
+  prompt: 'The kitten stands up and walks away into the garden'
+})
+
+console.log('Extended video:', extendedVideo.media.url)
+console.log('Source video ID:', extendedVideo.source_media_id)
+```
+
+### Chain Multiple Extensions
+
+Create longer narratives by chaining multiple 8-second extensions:
+
+```typescript
+// Build a 32-second video (4 segments)
+let currentVideo = await cosmic.ai.generateVideo({
+  prompt: 'Opening scene: sunrise over mountains',
+  duration: 8
+})
+
+const segments = [currentVideo]
+
+for (const continuation of [
+  'Birds take flight from the trees below',
+  'A hiker appears on the trail in the distance',
+  'Close-up of the hiker reaching the summit'
+]) {
+  currentVideo = await cosmic.ai.extendVideo({
+    media_id: currentVideo.media.id,
+    prompt: continuation
+  })
+  segments.push(currentVideo)
+}
+
+console.log(`Created ${segments.length} connected segments (${segments.length * 8}s total)`)
+```
+
 ### Error Handling
 
 ```typescript
@@ -209,25 +319,27 @@ model: 'veo-3.1-generate-preview'
 
 ## Token Costs
 
-Video generation costs are billed as **output tokens**:
+Video generation and extension costs are billed as **output tokens**:
 
 ### Veo 3.1 Fast
 
-| Duration | Output Tokens | Approx. Cost |
-|----------|---------------|--------------|
-| 4 seconds | 144,000 | $0.60 |
-| 6 seconds | 216,000 | $0.90 |
-| 8 seconds | 288,000 | $1.20 |
+| Feature | Output Tokens | Approx. Cost |
+|---------|---------------|--------------|
+| 4 second video | 144,000 | $0.60 |
+| 6 second video | 216,000 | $0.90 |
+| 8 second video | 288,000 | $1.20 |
+| Video extension | 288,000 | $1.20 |
 
 ### Veo 3.1 Standard
 
-| Duration | Output Tokens | Approx. Cost |
-|----------|---------------|--------------|
-| 4 seconds | 384,000 | $1.60 |
-| 6 seconds | 576,000 | $2.40 |
-| 8 seconds | 768,000 | $3.20 |
+| Feature | Output Tokens | Approx. Cost |
+|---------|---------------|--------------|
+| 4 second video | 384,000 | $1.60 |
+| 6 second video | 576,000 | $2.40 |
+| 8 second video | 768,000 | $3.20 |
+| Video extension | 768,000 | $3.20 |
 
-**Note**: Video generation is significantly more expensive than image generation. A single 8-second video costs the same as approximately 60 DALL-E 3 images.
+**Note**: Video generation is significantly more expensive than image generation. A single 8-second video costs the same as approximately 60 DALL-E 3 images. Video extensions always produce 8-second clips.
 
 ## Technical Specifications
 
@@ -270,19 +382,28 @@ The SDK is written in TypeScript and provides full type definitions:
 import { 
   createBucketClient,
   GenerateVideoOptions,
-  VideoGenerationResponse 
+  VideoGenerationResponse,
+  ExtendVideoOptions,
+  VideoExtensionResponse
 } from '@cosmicjs/sdk'
 
-// Type-safe options
-const options: GenerateVideoOptions = {
+// Type-safe video generation
+const generateOptions: GenerateVideoOptions = {
   prompt: 'A peaceful zen garden with raking sand patterns',
   model: 'veo-3.1-fast-generate-preview',
   duration: 8,
   resolution: '720p'
 }
 
-// Type-safe response
-const response: VideoGenerationResponse = await cosmic.ai.generateVideo(options)
+const video: VideoGenerationResponse = await cosmic.ai.generateVideo(generateOptions)
+
+// Type-safe video extension
+const extendOptions: ExtendVideoOptions = {
+  media_id: video.media.id,
+  prompt: 'Camera slowly pans to reveal the sunset'
+}
+
+const extended: VideoExtensionResponse = await cosmic.ai.extendVideo(extendOptions)
 ```
 
 ## Related Documentation

@@ -299,6 +299,29 @@ console.log(videoResponse.generation_time_seconds); // Time taken to generate
 - **Image-to-Video**: Use reference images as the starting frame
 - **Automatic Storage**: Videos are saved to your Media Library with global CDN delivery
 
+### Extend Video [[see docs](https://www.cosmicjs.com/docs/api/ai#extend-video)]
+
+Use the `ai.extendVideo()` method to extend a previously generated Veo video, creating longer sequences by continuing from the final frame.
+
+```jsx
+// First, generate an initial video
+const video = await cosmic.ai.generateVideo({
+  prompt: 'A calico kitten sitting in golden sunlight',
+  duration: 8
+})
+
+// Extend it with a continuation
+const extended = await cosmic.ai.extendVideo({
+  media_id: video.media.id,
+  prompt: 'The kitten stands up and walks away into the garden'
+})
+
+console.log(extended.media.url) // Your extended video!
+console.log(extended.source_media_id) // Original video ID
+```
+
+Video extensions are always 8 seconds at 720p. Extended videos can be extended again for unlimited chaining.
+
 See the [AI Video Generation Guide](./docs/AI_VIDEO_GENERATION.md) for detailed examples and best practices.
 
 ## Learn more
@@ -311,7 +334,7 @@ For additional help, you can use one of these channels to ask a question:
 
 - [Discord](https://discord.gg/MSCwQ7D6Mg) (Development questions, bug reports)
 - [GitHub](https://github.com/cosmicjs/cosmic-sdk-js) (Issues, contributions)
-- [X (formerly Twitter)](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
+- [X (formerly Twitter)](https://x.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
 - [YouTube](https://www.youtube.com/cosmicjs) (Learn from video tutorials)
 
 ## Cosmic support

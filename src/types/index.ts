@@ -11,6 +11,8 @@ export type {
   ImageGenerationResponse,
   GenerateVideoOptions,
   VideoGenerationResponse,
+  ExtendVideoOptions,
+  VideoExtensionResponse,
 } from '../clients/bucket/ai';
 
 // Export the TextStreamingResponse class
