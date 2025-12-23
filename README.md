@@ -123,7 +123,7 @@ await cosmic.objects.deleteOne('5ff75368c2dfa81a91695cec');
 
 ## AI Capabilities
 
-Cosmic provides AI-powered text and image generation capabilities through the SDK.
+Cosmic provides AI-powered text, image, and video generation capabilities through the SDK.
 
 ### Generate Text [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-text)]
 
@@ -267,6 +267,63 @@ console.log(imageResponse.media.alt_text); // Alt text for the image
 console.log(imageResponse.revised_prompt); // Potentially revised prompt used by the AI
 ```
 
+### Generate Video [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-video)]
+
+Use the `ai.generateVideo()` method to create AI-generated videos using Google's Veo 3.1 models.
+
+```jsx
+const videoResponse = await cosmic.ai.generateVideo({
+  prompt: 'Product rotates smoothly revealing all angles with soft studio lighting',
+  duration: 8, // 4, 6, or 8 seconds (optional, default: 8)
+  resolution: '720p', // '720p' or '1080p' (optional, default: '720p')
+  // Optional parameters
+  model: 'veo-3.1-fast-generate-preview', // or 'veo-3.1-generate-preview' for premium quality
+  reference_images: ['https://cdn.cosmicjs.com/product-hero.jpg'], // Up to 3 reference images
+  metadata: { product_id: 'prod_123', campaign: 'launch-2024' },
+  folder: 'ai-videos',
+});
+
+// Access the generated video properties
+console.log(videoResponse.media.url); // Direct CDN URL to the video
+console.log(videoResponse.media.imgix_url); // Imgix-enhanced URL
+console.log(videoResponse.media.metadata.duration); // Video duration in seconds
+console.log(videoResponse.media.metadata.resolution); // Resolution (720p or 1080p)
+console.log(videoResponse.usage.total_tokens); // Tokens consumed (144K-768K)
+console.log(videoResponse.generation_time_seconds); // Time taken to generate
+```
+
+**Video Features:**
+- **Native Audio**: Videos include automatically generated audio
+- **Two Quality Tiers**: Fast (30-90s generation) or Standard (60-180s, premium quality)
+- **Flexible Options**: 4, 6, or 8-second videos at 720p or 1080p
+- **Image-to-Video**: Use reference images as the starting frame
+- **Automatic Storage**: Videos are saved to your Media Library with global CDN delivery
+
+### Extend Video [[see docs](https://www.cosmicjs.com/docs/api/ai#extend-video)]
+
+Use the `ai.extendVideo()` method to extend a previously generated Veo video, creating longer sequences by continuing from the final frame.
+
+```jsx
+// First, generate an initial video
+const video = await cosmic.ai.generateVideo({
+  prompt: 'A calico kitten sitting in golden sunlight',
+  duration: 8
+})
+
+// Extend it with a continuation
+const extended = await cosmic.ai.extendVideo({
+  media_id: video.media.id,
+  prompt: 'The kitten stands up and walks away into the garden'
+})
+
+console.log(extended.media.url) // Your extended video!
+console.log(extended.source_media_id) // Original video ID
+```
+
+Video extensions are always 8 seconds at 720p. Extended videos can be extended again for unlimited chaining.
+
+See the [AI Video Generation Guide](./docs/AI_VIDEO_GENERATION.md) for detailed examples and best practices.
+
 ## Learn more
 
 Go to the [Cosmic docs](https://www.cosmicjs.com/docs) to learn more capabilities.
@@ -277,7 +334,7 @@ For additional help, you can use one of these channels to ask a question:
 
 - [Discord](https://discord.gg/MSCwQ7D6Mg) (Development questions, bug reports)
 - [GitHub](https://github.com/cosmicjs/cosmic-sdk-js) (Issues, contributions)
-- [X (formerly Twitter)](https://twitter.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
+- [X (formerly Twitter)](https://x.com/cosmicjs) (Get the latest news about Cosmic features and notifications)
 - [YouTube](https://www.youtube.com/cosmicjs) (Learn from video tutorials)
 
 ## Cosmic support
