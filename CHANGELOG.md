@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.6.0
+
+### Minor Changes
+
+- 4bf69f8: Add AI video generation support with generateVideo() and extendVideo() methods using Google's Veo 3.1 models
+
 ## 1.5.6
 
 ### Patch Changes
