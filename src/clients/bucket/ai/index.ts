@@ -40,6 +40,54 @@ export interface ExtendVideoOptions {
   folder?: string;
 }
 
+export interface GenerateAudioOptions {
+  prompt: string;
+  voice?:
+    | 'alloy'
+    | 'ash'
+    | 'coral'
+    | 'echo'
+    | 'fable'
+    | 'nova'
+    | 'onyx'
+    | 'sage'
+    | 'shimmer';
+  model?: 'tts-1' | 'tts-1-hd';
+  metadata?: Record<string, any>;
+  folder?: string;
+}
+
+export interface AudioGenerationResponse {
+  media: {
+    id: string;
+    name: string;
+    original_name: string;
+    size: number;
+    type: string;
+    bucket: string;
+    created_at: string;
+    created_by: string | null;
+    modified_at: string;
+    modified_by: string | null;
+    alt_text?: string;
+    url: string;
+    imgix_url: string;
+    metadata?: {
+      prompt: string;
+      model: string;
+      voice: string;
+      duration_estimate: string;
+      [key: string]: any;
+    };
+    folder?: string | null;
+  };
+  usage: {
+    input_tokens: number;
+    output_tokens: number;
+    total_tokens: number;
+  };
+}
+
 export interface TextGenerationResponseBase {
   text: string;
   usage: {
@@ -426,6 +474,16 @@ export const aiChainMethods = (
         );
       }
       const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/video/extend`;
+      return requestHandler('POST', endpoint, options, headers);
+    },
+
+    generateAudio: async (
+      options: GenerateAudioOptions
+    ): Promise<AudioGenerationResponse> => {
+      if (!options.prompt) {
+        throw new Error('prompt is required');
+      }
+      const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/audio`;
       return requestHandler('POST', endpoint, options, headers);
     },
   };
