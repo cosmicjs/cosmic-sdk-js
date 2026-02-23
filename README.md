@@ -324,6 +324,36 @@ Video extensions are always 8 seconds at 720p. Extended videos can be extended a
 
 See the [AI Video Generation Guide](./docs/AI_VIDEO_GENERATION.md) for detailed examples and best practices.
 
+### Generate Audio [[see docs](https://www.cosmicjs.com/docs/api/ai#generate-audio)]
+
+Use the `ai.generateAudio()` method to convert text to natural-sounding speech using OpenAI's TTS models.
+
+```jsx
+const audioResponse = await cosmic.ai.generateAudio({
+  prompt: 'Welcome to the Cosmic Developer Podcast! Today we are diving into AI-powered content workflows.',
+  voice: 'nova', // 9 voices available (optional, default: 'nova')
+  model: 'tts-1', // or 'tts-1-hd' for higher quality (optional, default: 'tts-1')
+  folder: 'ai-audio', // optional
+});
+
+// Access the generated audio properties
+console.log(audioResponse.media.url); // Direct CDN URL to the MP3
+console.log(audioResponse.media.imgix_url); // Imgix URL
+console.log(audioResponse.media.metadata.voice); // Voice used
+console.log(audioResponse.media.metadata.duration_estimate); // Estimated duration
+console.log(audioResponse.usage.output_tokens); // Tokens consumed (3,600 per 1K chars)
+```
+
+**Available Voices:**
+- **Feminine**: Nova (warm, bright), Shimmer (soft, intimate), Coral (clear, polished), Sage (calm, steady), Alloy (neutral, balanced)
+- **Masculine**: Echo (deep, authoritative), Onyx (bold, commanding), Fable (British, expressive), Ash (warm, conversational)
+
+**Audio Features:**
+- **Two Quality Tiers**: `tts-1` (standard) or `tts-1-hd` (high definition)
+- **Long Text Support**: Articles over 4,096 characters are automatically chunked and joined seamlessly
+- **Descriptive Filenames**: AI-generated filenames based on content (e.g. `cosmic-developer-podcast-intro.mp3`)
+- **Automatic Storage**: Audio files saved to your Media Library with global CDN delivery
+
 ## Learn more
 
 Go to the [Cosmic docs](https://www.cosmicjs.com/docs) to learn more capabilities.
