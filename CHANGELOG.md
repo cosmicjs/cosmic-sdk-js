@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.7.0
+
+### Minor Changes
+
+- c860ee9: Add AI text to audio feature
+
 ## 1.6.0
 
 ### Minor Changes
