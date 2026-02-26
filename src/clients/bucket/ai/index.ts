@@ -16,7 +16,11 @@ export interface GenerateTextOptions {
 
 export interface GenerateImageOptions {
   prompt: string;
-  model?: string;
+  model?:
+    | 'gemini-3.1-flash-image-preview'
+    | 'gemini-3-pro-image-preview'
+    | 'dall-e-3'
+    | (string & {});
   metadata?: Record<string, any>;
   folder?: string;
   alt_text?: string;
