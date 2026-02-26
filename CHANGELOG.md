@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.8.0
+
+### Minor Changes
+
+- d50c54e: Added support for Google Nano Banana 2
+
 ## 1.7.0
 
 ### Minor Changes
