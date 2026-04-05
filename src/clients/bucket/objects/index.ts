@@ -7,6 +7,13 @@ import { validateWriteKeyAndReturnHeaders } from '../../../utils/writeKey.valida
 import FindChaining from './lib/find.chaining';
 import FindOneChaining from './lib/findOne.chaining';
 
+export type BatchOperation = {
+  method: 'add' | 'edit' | 'delete';
+  object_id?: string;
+  object?: GenericObject;
+  trigger_webhook?: boolean;
+};
+
 let headers: GenericObject;
 
 export const objectsChainMethods = (
@@ -47,5 +54,11 @@ export const objectsChainMethods = (
     }/objects/${id}${triggerWebhook ? '?trigger_webhook=true' : ''}`;
     headers = validateWriteKeyAndReturnHeaders(bucketConfig.writeKey);
     return requestHandler(HTTP_METHODS.DELETE, endpoint, null, headers);
+  },
+
+  async batch(operations: BatchOperation[]) {
+    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/batch`;
+    headers = validateWriteKeyAndReturnHeaders(bucketConfig.writeKey);
+    return requestHandler(HTTP_METHODS.POST, endpoint, { operations }, headers);
   },
 });
