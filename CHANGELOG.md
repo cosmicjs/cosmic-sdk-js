@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 1.9.0
+
+### Minor Changes
+
+- 0c8cb16: Added batch operations
+
 ## 1.8.0
 
 ### Minor Changes
