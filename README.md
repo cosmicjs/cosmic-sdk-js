@@ -121,6 +121,19 @@ Use the `objects.deleteOne()` method to delete an Object by specifying the Objec
 await cosmic.objects.deleteOne('5ff75368c2dfa81a91695cec');
 ```
 
+### Batch Operations [[see docs](https://www.cosmicjs.com/docs/api/objects#batch-operations)]
+
+Use the `objects.batch()` method to create, update, and delete up to 25 Objects in a single call. Each operation succeeds or fails independently.
+
+```jsx
+const result = await cosmic.objects.batch([
+  { method: 'add', object: { title: 'Post 1', type: 'posts', metadata: { content: '...' } } },
+  { method: 'edit', object_id: '5ff75368c2dfa81a91695cec', object: { title: 'Updated Title' } },
+  { method: 'delete', object_id: '5ff75368c2dfa81a91695ced' },
+]);
+// result.operations: [{ method, status, object/message }, ...]
+```
+
 ## AI Capabilities
 
 Cosmic provides AI-powered text, image, and video generation capabilities through the SDK.
