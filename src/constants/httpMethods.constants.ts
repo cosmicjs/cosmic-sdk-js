@@ -1,10 +1,10 @@
 const HTTP_METHODS = {
-  POST: 'post',
-  GET: 'get',
-  FETCH: 'fetch',
-  PUT: 'put',
-  PATCH: 'patch',
-  DELETE: 'delete',
+  POST: 'POST',
+  GET: 'GET',
+  FETCH: 'FETCH',
+  PUT: 'PUT',
+  PATCH: 'PATCH',
+  DELETE: 'DELETE',
 };
 
 export default HTTP_METHODS;
