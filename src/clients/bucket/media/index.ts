@@ -1,4 +1,3 @@
-import NodeFormData from 'form-data';
 import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
 import { GenericObject, NonEmptyObject } from '../../../types/generic.types';
@@ -9,7 +8,6 @@ import FindChaining from './lib/find.chaining';
 import FindOneChaining from './lib/findOne.chaining';
 import { encodedQueryParam } from '../../../utils/generic.utils';
 
-// Environment detection
 const isNode = typeof window === 'undefined';
 
 let headers: GenericObject;
@@ -36,76 +34,34 @@ export const mediaChainMethods = (
 
   async insertOne(params: InsertMediaType) {
     const endpoint = `${apiConfig.uploadUrl}/buckets/${bucketConfig.bucketSlug}/media`;
+    const data = new FormData();
 
     if (isNode) {
-      // Node.js environment - use form-data package
-      const data = new NodeFormData();
-
-      // Handle different Buffer formats
       if (Buffer.isBuffer(params.media)) {
-        // Direct Buffer - use filename and contentType from params
-        data.append('media', params.media, {
-          filename: params.filename || 'file',
-          contentType: params.contentType || 'application/octet-stream',
+        // eslint-disable-next-line no-undef
+        const blob = new Blob([params.media], {
+          type: params.contentType || 'application/octet-stream',
         });
+        data.append('media', blob, params.filename || 'file');
       } else if (
         typeof params.media === 'object' &&
         'buffer' in params.media &&
-        Buffer.isBuffer(params.media.buffer)
+        Buffer.isBuffer((params.media as any).buffer)
       ) {
-        // Handle { buffer: Buffer, originalname: string } format
-        data.append('media', params.media.buffer, params.media.originalname);
+        const mediaObj = params.media as {
+          buffer: Buffer;
+          originalname: string;
+        };
+        // eslint-disable-next-line no-undef
+        const blob = new Blob([mediaObj.buffer]);
+        data.append('media', blob, mediaObj.originalname);
       } else {
         throw new Error(
           'In Node.js environment, media must be a Buffer or { buffer: Buffer, originalname: string }'
         );
       }
-
-      // Append other fields
-      if (bucketConfig.writeKey) {
-        data.append('write_key', bucketConfig.writeKey);
-      }
-      if (params.folder) {
-        data.append('folder', params.folder);
-      }
-      if (params.metadata) {
-        data.append('metadata', JSON.stringify(params.metadata));
-      }
-      if (params.trigger_webhook) {
-        data.append('trigger_webhook', params.trigger_webhook.toString());
-      }
-
-      // Get proper headers for Node.js FormData
-      return new Promise((resolve, reject) => {
-        data.getLength((err, length) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-
-          const headersObj: GenericObject = {
-            'Content-Length': length,
-            ...data.getHeaders(),
-          };
-
-          if (bucketConfig.writeKey) {
-            headersObj.Authorization = `Bearer ${bucketConfig.writeKey}`;
-          }
-
-          requestHandler(HTTP_METHODS.POST, endpoint, data, headersObj)
-            .then(resolve)
-            .catch((error) => {
-              reject(error.response?.data || error);
-            });
-        });
-      });
-    }
-    // Browser environment - use native FormData
-    const data = new FormData();
-
-    // Expect File or Blob
-    // eslint-disable-next-line no-undef
-    if (params.media instanceof File || params.media instanceof Blob) {
+      // eslint-disable-next-line no-undef
+    } else if (params.media instanceof File || params.media instanceof Blob) {
       const filename =
         // eslint-disable-next-line no-undef
         params.media instanceof File ? params.media.name : 'file';
@@ -114,7 +70,6 @@ export const mediaChainMethods = (
       throw new Error('In browser environment, media must be a File or Blob');
     }
 
-    // Append other fields
     if (bucketConfig.writeKey) {
       data.append('write_key', bucketConfig.writeKey);
     }
@@ -128,19 +83,12 @@ export const mediaChainMethods = (
       data.append('trigger_webhook', params.trigger_webhook.toString());
     }
 
-    const headersObj: GenericObject = {
-      // Let browser set Content-Type with boundary automatically
-    };
-
+    const headersObj: GenericObject = {};
     if (bucketConfig.writeKey) {
       headersObj.Authorization = `Bearer ${bucketConfig.writeKey}`;
     }
 
-    return requestHandler(HTTP_METHODS.POST, endpoint, data, headersObj).catch(
-      (error) => {
-        throw error.response?.data || error;
-      }
-    );
+    return requestHandler(HTTP_METHODS.POST, endpoint, data, headersObj);
   },
 
   async updateOne(id: string, updates: GenericObject) {
