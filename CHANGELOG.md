@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 3.0.0
+
+### Major Changes
+
+- e172b56: Replace axios and form-data with native fetch, FormData, and Blob. Zero runtime dependencies. Requires Node.js >= 18.
+
 ## 1.9.0
 
 ### Minor Changes
