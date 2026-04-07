@@ -10,6 +10,45 @@ import { encodedQueryParam } from '../../../utils/generic.utils';
 
 const isNode = typeof window === 'undefined';
 
+const MIME_TYPES: Record<string, string> = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.webp': 'image/webp',
+  '.svg': 'image/svg+xml',
+  '.bmp': 'image/bmp',
+  '.ico': 'image/x-icon',
+  '.tiff': 'image/tiff',
+  '.tif': 'image/tiff',
+  '.avif': 'image/avif',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.mov': 'video/quicktime',
+  '.avi': 'video/x-msvideo',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.ogg': 'audio/ogg',
+  '.pdf': 'application/pdf',
+  '.json': 'application/json',
+  '.xml': 'application/xml',
+  '.zip': 'application/zip',
+  '.csv': 'text/csv',
+  '.txt': 'text/plain',
+  '.html': 'text/html',
+  '.css': 'text/css',
+  '.js': 'application/javascript',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf',
+  '.otf': 'font/otf',
+};
+
+function getMimeType(filename: string): string {
+  const ext = filename.slice(filename.lastIndexOf('.')).toLowerCase();
+  return MIME_TYPES[ext] || 'application/octet-stream';
+}
+
 let headers: GenericObject;
 
 export const mediaChainMethods = (
@@ -38,11 +77,12 @@ export const mediaChainMethods = (
 
     if (isNode) {
       if (Buffer.isBuffer(params.media)) {
+        const filename = params.filename || 'file';
         // eslint-disable-next-line no-undef
         const blob = new Blob([params.media], {
-          type: params.contentType || 'application/octet-stream',
+          type: params.contentType || getMimeType(filename),
         });
-        data.append('media', blob, params.filename || 'file');
+        data.append('media', blob, filename);
       } else if (
         typeof params.media === 'object' &&
         'buffer' in params.media &&
@@ -51,9 +91,12 @@ export const mediaChainMethods = (
         const mediaObj = params.media as {
           buffer: Buffer;
           originalname: string;
+          type?: string;
         };
         // eslint-disable-next-line no-undef
-        const blob = new Blob([mediaObj.buffer]);
+        const blob = new Blob([mediaObj.buffer], {
+          type: mediaObj.type || getMimeType(mediaObj.originalname),
+        });
         data.append('media', blob, mediaObj.originalname);
       } else {
         throw new Error(
