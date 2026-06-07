@@ -120,7 +120,16 @@ The `object` (and `objects`) names are reserved for inline object embeds.
 
 Rich-text values are served verbatim (markdown + `{{shortcode}}` tokens); the
 API never pre-renders them. Fetch the bucket's block definitions once and reuse
-them across objects:
+them across objects. The easiest way is the official SDK:
+
+```ts
+import { createBucketClient } from '@cosmicjs/sdk';
+
+const cosmic = createBucketClient({ bucketSlug, readKey });
+const { blocks } = await cosmic.blocks.find();
+```
+
+Or call the endpoint directly:
 
 ```
 GET buckets/{slug}/blocks   ->   { "blocks": [ ...BlockDefinition ] }

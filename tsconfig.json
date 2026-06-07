@@ -9,10 +9,14 @@
     "noUncheckedIndexedAccess": true,
     "noEmit": true
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules",
     "dist",
     "examples",
-    "docs"
+    "docs",
+    "packages"
   ]
 }
