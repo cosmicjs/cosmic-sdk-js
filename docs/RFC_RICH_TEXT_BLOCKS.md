@@ -1,4 +1,4 @@
-# RFC: Rich-text blocks - rendering model, blocks endpoint, and `@cosmicjs/blocks`
+# RFC: Rich-text blocks - rendering model, blocks endpoint, and `@cosmicjs/rich-text`
 
 - Status: Approved - rolling out (GA)
 - Author: Cosmic engineering
@@ -18,9 +18,9 @@ This RFC proposes a **control-first rendering model**:
 2. A dedicated, cacheable endpoint exposes block definitions:
    `GET buckets/{slug}/blocks`.
 3. Consumers resolve tokens themselves, either with the official renderer
-   (`@cosmicjs/blocks`) or their own code.
+   (`@cosmicjs/rich-text`) or their own code.
 
-**Decision (GA rollout):** all three are shipping. `@cosmicjs/blocks` is being
+**Decision (GA rollout):** all three are shipping. `@cosmicjs/rich-text` is being
 published to npm as the official renderer (option A below), `publishConfig.access`
 is set to `public`, and the docs reference it as the recommended path. The
 remaining publish step (`npm publish` / changeset release) runs through the
@@ -90,7 +90,7 @@ interface BlockDefinition {
 
 Consumers resolve `{{shortcode}}` tokens against the fetched definitions:
 
-- **Official renderer** `@cosmicjs/blocks`: `<RichText value blocks={blocks} />`
+- **Official renderer** `@cosmicjs/rich-text`: `<RichText value blocks={blocks} />`
   or `renderRichText(value, { blocks })`, with an overridable component per block
   (`components={{ callout: Callout }}`).
 - **Bring your own**: the shortcode grammar + `data-block` HTML contract are
@@ -137,9 +137,9 @@ registered for a type, a `DefaultObjectBlock` placeholder renders (it never
 silently drops the reference). Dashboard read-only/preview views render the same
 kind of reference placeholder.
 
-## `@cosmicjs/blocks` (publish decision)
+## `@cosmicjs/rich-text` (publish decision)
 
-The package lives at `cosmic-sdk-js/packages/blocks`, builds, and exposes
+The package lives at `cosmic-sdk-js/packages/rich-text`, builds, and exposes
 `RichText`, `renderRichText`, `BlockProps`, and `BlockDefinition`.
 
 Options considered:
@@ -187,7 +187,7 @@ breaking change.
 
 ## Resolved
 
-- **Publish `@cosmicjs/blocks`?** Yes - publish standalone for GA (option A). A
+- **Publish `@cosmicjs/rich-text`?** Yes - publish standalone for GA (option A). A
   later fold into `@cosmicjs/sdk` (C) stays open as a non-breaking re-export.
 
 ## Open questions

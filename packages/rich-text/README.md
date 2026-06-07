@@ -1,4 +1,4 @@
-# @cosmicjs/blocks
+# @cosmicjs/rich-text
 
 Official React renderer for Cosmic `rich-text` metafields. Rich-text values are
 stored as markdown prose interleaved with `{{shortcode}}` block tokens. Each
@@ -9,7 +9,7 @@ React, with an overridable component per block.
 ## Install
 
 ```bash
-npm install @cosmicjs/blocks
+npm install @cosmicjs/rich-text
 ```
 
 `react` is a peer dependency.
@@ -20,7 +20,7 @@ Pass the bucket's block definitions (`settings.rich_text_blocks`) so `{{name}}`
 tokens can be expanded.
 
 ```tsx
-import { RichText } from '@cosmicjs/blocks';
+import { RichText } from '@cosmicjs/rich-text';
 
 export default function Post({ post, blocks }) {
   return <RichText value={post.metadata.content} blocks={blocks} />;
@@ -33,7 +33,7 @@ By default each block renders as a `data-block` div wrapping its content. Provid
 a `components` map keyed by block name to customize rendering.
 
 ```tsx
-import { RichText, BlockProps } from '@cosmicjs/blocks';
+import { RichText, BlockProps } from '@cosmicjs/rich-text';
 
 const Callout = ({ contentHtml }: BlockProps) => (
   <aside
@@ -63,7 +63,7 @@ slug) and a `resolveObject` function. Fetch the parent object with relationship
 depth so the referenced objects are available, then resolve by `id`:
 
 ```tsx
-import { RichText, ObjectBlockProps } from '@cosmicjs/blocks';
+import { RichText, ObjectBlockProps } from '@cosmicjs/rich-text';
 
 const PostCard = ({ object }: ObjectBlockProps) =>
   object ? <a href={`/posts/${object.slug}`}>{object.title}</a> : null;
@@ -86,7 +86,7 @@ silently dropped).
 ### Imperative API
 
 ```tsx
-import { renderRichText } from '@cosmicjs/blocks';
+import { renderRichText } from '@cosmicjs/rich-text';
 
 const nodes = renderRichText(value, { blocks });
 ```

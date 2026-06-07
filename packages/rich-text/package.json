@@ -1,7 +1,7 @@
 {
-  "name": "@cosmicjs/blocks",
+  "name": "@cosmicjs/rich-text",
   "version": "0.1.0",
-  "description": "Official React renderer for Cosmic rich-text (markdown + shortcode blocks).",
+  "description": "Official React renderer for Cosmic rich-text (markdown + shortcode blocks and inline object embeds).",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --external react",
     "dev": "tsup src/index.ts --format cjs,esm --dts --external react --watch",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "cosmic",
@@ -27,7 +28,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/cosmicjs/cosmic-sdk-js.git",
-    "directory": "packages/blocks"
+    "directory": "packages/rich-text"
   },
   "homepage": "https://www.cosmicjs.com/docs/api/rich-text",
   "peerDependencies": {

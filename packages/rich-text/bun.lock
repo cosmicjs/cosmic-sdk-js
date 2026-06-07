@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "@cosmicjs/blocks",
+      "name": "@cosmicjs/rich-text",
       "dependencies": {
         "marked": "^14.1.3",
       },
