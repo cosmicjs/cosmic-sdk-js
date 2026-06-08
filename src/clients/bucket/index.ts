@@ -5,6 +5,7 @@ import { objectsChainMethods } from './objects';
 import { objectTypesChainMethods } from './objectTypes';
 import { objectRevisionsChainMethods } from './objectRevisions';
 import { aiChainMethods } from './ai';
+import { blocksChainMethods } from './blocks';
 
 export const createBucketClient = (config: BucketConfig) => {
   const bucketConfig: BucketConfig = {
@@ -20,6 +21,7 @@ export const createBucketClient = (config: BucketConfig) => {
     objectRevisions: objectRevisionsChainMethods(bucketConfig, apiConfig),
     media: mediaChainMethods(bucketConfig, apiConfig),
     ai: aiChainMethods(bucketConfig, apiConfig),
+    blocks: blocksChainMethods(bucketConfig, apiConfig),
   };
 };
 

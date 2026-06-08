@@ -3,6 +3,7 @@ export type { BucketConfig, APIConfig } from './config.types';
 export type { GenericObject } from './generic.types';
 export type { PromiseFnType } from './promise.types';
 export type { BatchOperation } from '../clients/bucket/objects';
+export type { Block, BlocksResponse } from './blocks.types';
 
 // AI-related types
 export type {
