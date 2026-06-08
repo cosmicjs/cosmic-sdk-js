@@ -16,7 +16,7 @@ npm install @cosmicjs/rich-text
 
 ## Usage
 
-Pass the bucket's block definitions (`settings.rich_text_blocks`) so `{{name}}`
+Pass the bucket's block definitions (`settings.content_blocks`) so `{{name}}`
 tokens can be expanded.
 
 ```tsx
@@ -93,7 +93,7 @@ const nodes = renderRichText(value, { blocks });
 
 ## Block definitions
 
-A block definition has this shape (stored in `settings.rich_text_blocks`):
+A block definition has this shape (stored in `settings.content_blocks`):
 
 ```ts
 interface BlockDefinition {
@@ -136,5 +136,5 @@ GET buckets/{slug}/blocks   ->   { "blocks": [ ...BlockDefinition ] }
 ```
 
 The endpoint is read-key authed and Fastly-cached on the bucket. The same data
-is also available on the bucket object at `settings.rich_text_blocks`. Pass the
+is also available on the bucket object at `settings.content_blocks`. Pass the
 result as the `blocks` prop above.

@@ -17,7 +17,7 @@ marked.setOptions({ gfm: true, breaks: false });
 
 export interface RenderRichTextOptions {
   /**
-   * Block definitions from the bucket's settings (`rich_text_blocks`). Used to
+   * Block definitions from the bucket's settings (`content_blocks`). Used to
    * resolve `{{name}}` shortcodes to their stored content. Without this, blocks
    * cannot be expanded.
    */

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 /**
  * A reusable Rich Text block definition, as stored in a bucket's
- * `settings.rich_text_blocks`. Inserting `{{name /}}` in a rich-text value
+ * `settings.content_blocks`. Inserting `{{name /}}` in a rich-text value
  * expands to this block's content.
  */
 export interface BlockDefinition {

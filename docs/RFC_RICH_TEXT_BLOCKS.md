@@ -3,13 +3,13 @@
 - Status: Approved - rolling out (GA)
 - Author: Cosmic engineering
 - Affected repos: `cosmic-api`, `cosmic-backend`, `cosmic-dashboard`, `cosmic-sdk-js`
-- Related: `rich-text` metafield, Custom Blocks (bucket settings `rich_text_blocks`)
+- Related: `rich-text` metafield, Custom Blocks (bucket settings `content_blocks`)
 
 ## Summary
 
 The `rich-text` metafield stores markdown prose interleaved with `{{shortcode}}`
 block tokens. Each token references a reusable **block** defined per bucket in
-**Settings -> Custom Blocks** (`settings.rich_text_blocks`).
+**Settings -> Custom Blocks** (`settings.content_blocks`).
 
 This RFC proposes a **control-first rendering model**:
 
@@ -63,7 +63,7 @@ GET buckets/{slug}/blocks   ->   200 { "blocks": [ ...BlockDefinition ] }
 ```
 
 - **Auth:** read key (same as object reads).
-- **Source:** `bucket.settings.rich_text_blocks` (returns `[]` if unset).
+- **Source:** `bucket.settings.content_blocks` (returns `[]` if unset).
 - **Caching:** Fastly-cached on the **bucket surrogate key**, so editing blocks
   invalidates the blocks response without touching object caches. Clients fetch
   it once and reuse it across many objects.
@@ -82,7 +82,7 @@ interface BlockDefinition {
 ```
 
 > The same definitions remain available on the bucket object at
-> `settings.rich_text_blocks`. The dedicated endpoint exists so renderers can
+> `settings.content_blocks`. The dedicated endpoint exists so renderers can
 > fetch just the blocks, with their own cache lifetime, instead of pulling the
 > whole bucket.
 

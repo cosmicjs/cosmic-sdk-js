@@ -9,7 +9,7 @@ export const blocksChainMethods = (
 ) => ({
   /**
    * Fetch the bucket's Rich Text block definitions
-   * (`settings.rich_text_blocks`). Pass the result to a rich-text renderer
+   * (`settings.content_blocks`). Pass the result to a rich-text renderer
    * such as `@cosmicjs/rich-text` to expand `{{name /}}` block tokens.
    */
   find(): Promise<BlocksResponse> {
