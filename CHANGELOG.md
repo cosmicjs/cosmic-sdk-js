@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 2.1.0
+
+### Minor Changes
+
+- 6199519: Add `blocks.find()` to fetch a bucket's Rich Text block definitions (`settings.content_blocks`). Pass the result to a rich-text renderer such as `@cosmicjs/rich-text` to expand `{{name /}}` block tokens.
+
 ## 2.0.1
 
 ### Patch Changes
