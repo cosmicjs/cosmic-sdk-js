@@ -1,6 +1,6 @@
 {
   "name": "@cosmicjs/rich-text",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official renderer for Cosmic rich-text (markdown + shortcode blocks and inline object embeds): React components plus a framework-agnostic HTML string renderer.",
   "license": "MIT",
   "main": "dist/index.js",
