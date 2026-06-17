@@ -1,5 +1,11 @@
 export { renderRichText, RichText } from './RichText';
 export type { RenderRichTextOptions, RichTextProps } from './RichText';
+export { renderToHtml } from './renderToHtml';
+export type {
+  RenderToHtmlOptions,
+  BlockWrapperArgs,
+  ObjectRef,
+} from './renderToHtml';
 export { DefaultBlock, DefaultObjectBlock, plainContentToHtml } from './blocks';
 export type {
   BlockComponents,

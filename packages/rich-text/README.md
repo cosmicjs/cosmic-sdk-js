@@ -1,10 +1,11 @@
 # @cosmicjs/rich-text
 
-Official React renderer for Cosmic `rich-text` metafields. Rich-text values are
-stored as markdown prose interleaved with `{{shortcode}}` block tokens. Each
-block is a reusable content snippet defined in your bucket settings. This package
-parses the value, resolves blocks against their definitions, and renders to
-React, with an overridable component per block.
+Official renderer for Cosmic `rich-text` metafields. Rich-text values are stored
+as markdown prose interleaved with `{{shortcode}}` block tokens. Each block is
+either a reusable snippet defined in your bucket settings (synced) or an editable
+per-instance copy. This package parses the value, resolves blocks against their
+definitions, and renders to React with an overridable component per block, or to
+a plain HTML string via the React-free `@cosmicjs/rich-text/html` entry point.
 
 ## Install
 
@@ -46,7 +47,8 @@ const Callout = ({ contentHtml }: BlockProps) => (
 ```
 
 Each component receives `{ name, definition, contentHtml }`, where `contentHtml`
-is the block's content already rendered to HTML (markdown or plain text).
+is the block's content already rendered to HTML: the inline content for an
+editable instance, or the definition's content for a synced reference.
 
 ### Inline object embeds
 
@@ -91,6 +93,28 @@ import { renderRichText } from '@cosmicjs/rich-text';
 const nodes = renderRichText(value, { blocks });
 ```
 
+### Render to an HTML string (no React)
+
+For non-React stacks (Vue, Svelte, Astro, server templates), import
+`renderToHtml` from the `@cosmicjs/rich-text/html` entry point, which has no
+React dependency. It returns a single HTML string.
+
+```ts
+import { renderToHtml } from '@cosmicjs/rich-text/html';
+
+const html = renderToHtml(value, {
+  blocks,
+  // Optional: customize block markup.
+  blockWrapper: ({ name, innerHtml }) =>
+    `<aside class="block block-${name}">${innerHtml}</aside>`,
+  // Optional: resolve inline object embeds to your own HTML.
+  resolveObjectHtml: ({ id }) => byId.get(id)?.html,
+});
+```
+
+By default blocks render to the same `data-block` wrapper as the React renderer,
+and unresolved object embeds render to a `data-object` placeholder.
+
 ## Block definitions
 
 A block definition has this shape (stored in `settings.content_blocks`):
@@ -108,13 +132,17 @@ interface BlockDefinition {
 ## Shortcode grammar
 
 ```
-{{ name /}}                                  block reference
+{{ name /}}                                      synced block reference
+{{ name }}...{{/ name }}                          editable ("Edit on page") instance
 {{ object type="posts" id="..." slug="..." /}}   inline object embed
 ```
 
-Blocks reference content by name; the content lives in the block definition.
-Unknown blocks (no matching definition) are dropped unless `keepUnknown` is set.
-The `object` (and `objects`) names are reserved for inline object embeds.
+A synced reference (`{{ name /}}`) resolves its content from the block
+definition, so editing the saved block updates every synced instance. An
+editable instance (`{{ name }}...{{/ name }}`) stores its content inline, so it
+is unique to that value and no longer tracks the saved block. Unknown blocks (no
+matching definition) are dropped unless `keepUnknown` is set. The `object` (and
+`objects`) names are reserved for inline object embeds.
 
 ## Fetching block definitions
 
