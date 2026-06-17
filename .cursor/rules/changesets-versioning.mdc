@@ -1,0 +1,35 @@
+---
+description: How to version and release packages in this monorepo (Changesets)
+globs:
+  - "**/package.json"
+  - ".changeset/**"
+alwaysApply: true
+---
+
+# Versioning: never bump `version` by hand
+
+This repo releases with [Changesets](https://github.com/changesets/changesets). The
+version numbers in each `package.json` are owned by the automation, not by humans.
+
+## Rules
+
+- NEVER manually edit the `"version"` field in any `package.json`.
+- To ship a change, add a changeset instead: run `npx changeset` (or create a file
+  under `.changeset/`) describing the bump (`patch` | `minor` | `major`).
+- The `changeset-release/main` bot opens a "Version Packages" PR that consumes the
+  changeset, computes the next version from the **last published** version, updates
+  `CHANGELOG.md`, and deletes the changeset. Merging that PR publishes to npm.
+
+## Why this matters
+
+If you both bump `version` in `package.json` AND add a changeset, the bump is applied
+twice. Example incident: `@cosmicjs/rich-text` was manually bumped `0.1.0 -> 0.2.0`
+and also had a `minor` changeset, so the bot produced `0.3.0` instead of the intended
+`0.2.0`. The fix was to revert `package.json` back to the published baseline (`0.1.0`)
+and let the changeset alone bump it to `0.2.0`.
+
+## Checklist before committing a feature
+
+1. `package.json` `version` is unchanged from the published baseline.
+2. There is exactly one changeset describing the change, scoped to the right package(s).
+3. You did not hand-edit `CHANGELOG.md` (the bot writes it).
