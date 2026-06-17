@@ -1,17 +1,9 @@
 import * as React from 'react';
+import { ShortcodeAttrs } from './shortcode';
+import { BlockDefinition, plainContentToHtml } from './blockContent';
 
-/**
- * A reusable Rich Text block definition, as stored in a bucket's
- * `settings.content_blocks`. Inserting `{{name /}}` in a rich-text value
- * expands to this block's content.
- */
-export interface BlockDefinition {
-  name: string;
-  title?: string;
-  description?: string;
-  content: string;
-  editor: 'rich-text' | 'plain' | 'html';
-}
+export type { BlockDefinition };
+export { plainContentToHtml };
 
 export interface BlockProps {
   /** The block name, e.g. "callout". */
@@ -20,6 +12,11 @@ export interface BlockProps {
   definition?: BlockDefinition;
   /** The block's rendered content HTML. */
   contentHtml: string;
+  /**
+   * Attributes parsed from the shortcode token, e.g. `{{callout type="warning"}}`
+   * yields `{ type: 'warning' }`. Empty for plain `{{callout /}}` references.
+   */
+  attrs?: ShortcodeAttrs;
 }
 
 export type BlockComponents = Record<string, React.ComponentType<BlockProps>>;
@@ -66,16 +63,6 @@ export const DefaultObjectBlock = ({ id, type, slug }: ObjectBlockProps) => (
     {slug || id}
   </div>
 );
-
-/** Escape plain-text block content, preserving line breaks. */
-export function plainContentToHtml(content: string): string {
-  return String(content || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/\r?\n/g, '<br>');
-}
 
 /** Default block renderer: wraps the rendered content in a data-block div. */
 export const DefaultBlock = ({ name, contentHtml }: BlockProps) => (

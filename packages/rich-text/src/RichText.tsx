@@ -108,14 +108,19 @@ export function renderRichText(
     }
 
     const definition = definitions.get(segment.name);
-    if (!definition) {
+
+    // A paired block ({{name}}...{{/name}}) is a detached "Edit on page"
+    // instance: its content lives inline in the value, not in the block
+    // definition. Render that inline content (markdown). A self-closing
+    // {{name /}} is a synced reference resolved from the definition.
+    let contentHtml: string;
+    if (segment.paired) {
+      contentHtml = renderMarkdown(segment.content || '');
+    } else if (!definition) {
       return keepUnknown ? (
         <React.Fragment key={index}>{segment.raw}</React.Fragment>
       ) : null;
-    }
-
-    let contentHtml: string;
-    if (definition.editor === 'plain') {
+    } else if (definition.editor === 'plain') {
       contentHtml = plainContentToHtml(definition.content);
     } else if (definition.editor === 'html') {
       // Raw HTML blocks render verbatim. Enable the `sanitize` option (or pass a
@@ -127,7 +132,12 @@ export function renderRichText(
 
     const Component =
       (components && components[segment.name]) || DefaultBlock;
-    const props: BlockProps = { name: segment.name, definition, contentHtml };
+    const props: BlockProps = {
+      name: segment.name,
+      definition,
+      contentHtml,
+      attrs: segment.attrs,
+    };
     return <Component key={index} {...props} />;
   });
 }
