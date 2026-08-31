@@ -19,6 +19,9 @@ version numbers in each `package.json` are owned by the automation, not by human
 - The `changeset-release/main` bot opens a "Version Packages" PR that consumes the
   changeset, computes the next version from the **last published** version, updates
   `CHANGELOG.md`, and deletes the changeset. Merging that PR publishes to npm.
+- Keep `"."` in root `package.json` `workspaces` alongside `packages/*`. Changesets
+  only versions workspace packages, not the workspace root. Without `"."` it cannot
+  see `@cosmicjs/sdk` and publish fails with "such a package could not be found".
 
 ## Why this matters
 
