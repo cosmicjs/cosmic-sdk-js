@@ -25,7 +25,8 @@
   "license": "MIT",
   "author": "Tony Spiro <tony@cosmicjs.com>",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "."
   ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
