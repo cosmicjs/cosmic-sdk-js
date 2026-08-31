@@ -1,7 +1,10 @@
 import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
 import { GenericObject, NonEmptyObject } from '../../../types/generic.types';
-import { encodedQueryParam } from '../../../utils/generic.utils';
+import {
+  encodedQueryParam,
+  previewTokenParam,
+} from '../../../utils/generic.utils';
 import { requestHandler } from '../../../utils/request.handler';
 import { validateWriteKeyAndReturnHeaders } from '../../../utils/writeKey.validation';
 import FindChaining from './lib/find.chaining';
@@ -23,14 +26,18 @@ export const objectsChainMethods = (
   find(query: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
-    }/objects?read_key=${bucketConfig.readKey}${encodedQueryParam(query)}`;
+    }/objects?read_key=${bucketConfig.readKey}${previewTokenParam(
+      bucketConfig.previewToken
+    )}${encodedQueryParam(query)}`;
     return new FindChaining(endpoint, bucketConfig);
   },
 
   findOne<T extends Record<string, unknown>>(query: NonEmptyObject<T>) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
-    }/objects?read_key=${bucketConfig.readKey}&limit=1${encodedQueryParam(
+    }/objects?read_key=${bucketConfig.readKey}&limit=1${previewTokenParam(
+      bucketConfig.previewToken
+    )}${encodedQueryParam(
       query
     )}`;
     return new FindOneChaining(endpoint, bucketConfig);

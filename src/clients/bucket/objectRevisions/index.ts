@@ -2,6 +2,7 @@ import HTTP_METHODS from '../../../constants/httpMethods.constants';
 import { APIConfig, BucketConfig } from '../../../types/config.types';
 import { InsertObjectRevisionType } from '../../../types/objectRevision.type';
 import { GenericObject } from '../../../types/generic.types';
+import { previewTokenParam } from '../../../utils/generic.utils';
 import { requestHandler } from '../../../utils/request.handler';
 import { validateWriteKeyAndReturnHeaders } from '../../../utils/writeKey.validation';
 import FindOneChaining from './lib/findOne.chaining';
@@ -14,12 +15,16 @@ export const objectRevisionsChainMethods = (
   apiConfig: APIConfig
 ) => ({
   find(objectId: string) {
-    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/${objectId}/revisions?read_key=${bucketConfig.readKey}`;
+    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/${objectId}/revisions?read_key=${bucketConfig.readKey}${previewTokenParam(
+      bucketConfig.previewToken
+    )}`;
     return new FindChaining(endpoint, bucketConfig);
   },
 
   findOne({ objectId, revisionId }: { objectId: string; revisionId: string }) {
-    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/${objectId}/revisions/${revisionId}?read_key=${bucketConfig.readKey}`;
+    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/${objectId}/revisions/${revisionId}?read_key=${bucketConfig.readKey}${previewTokenParam(
+      bucketConfig.previewToken
+    )}`;
     return new FindOneChaining(endpoint, bucketConfig);
   },
 

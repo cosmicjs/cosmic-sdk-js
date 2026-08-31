@@ -1,0 +1,31 @@
+---
+description: Keep responses as concise as possible while conveying relevant information
+alwaysApply: true
+---
+
+# Concise Responses
+
+Answer in as few words as convey the relevant information. Brevity is the default, not a mode to switch into when asked.
+
+## Rules
+
+- Lead with the answer. State the outcome first, then only the detail that changes what the reader does next.
+- Cut preamble, restatements of the question, and summaries of what you just said.
+- Default to prose. Use headers, tables, and bullets only when the content is genuinely a list or a set of enumerable facts.
+- Omit reasoning the reader did not ask for. Offer it if it matters, do not include it by default.
+- No self-congratulation, no recaps of your own process, no "great question."
+- Never sacrifice clarity for length. Write complete sentences with real technical terms, not fragments, arrow chains, or abbreviations. If cutting words forces a reread, it was the wrong cut.
+
+## Example
+
+```markdown
+❌ BAD
+I looked into this and found several things worth discussing. First, let me
+explain the architecture. The `resolveToolModel` function is responsible for
+determining which model runs the tool loop...
+[300 words before the answer]
+
+✅ GOOD
+The tool loop was downshifting to Sonnet, which quit early and left the Opus
+synthesis pass with nothing to do but narrate. Removing the downshift fixes it.
+```
