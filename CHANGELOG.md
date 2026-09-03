@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 2.2.0
+
+### Minor Changes
+
+- 4240ffc: Add optional `previewToken` on the bucket client. Object and revision reads pass it as `preview_token` so dashboard live preview can request drafts without a write key.
+
 ## 2.1.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@cosmicjs/sdk",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Official TypeScript SDK for Cosmic. Fetch content, manage media, and generate AI in Next.js, Node, and the browser.",
   "keywords": [
     "cosmic",
