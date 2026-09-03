@@ -7,7 +7,7 @@
 <h1 align="center">Cosmic JavaScript SDK</h1>
 
 <p align="center">
-  JavaScript SDK for <a href="https://www.cosmicjs.com/">Cosmic</a>. Fetch content, manage media, and generate AI in Next.js, Node, and the browser.
+  The official client for <a href="https://www.cosmicjs.com/">Cosmic</a>. Fetch content, manage media, and generate AI in Next.js, Node, and the browser.
 </p>
 
 <p align="center">
