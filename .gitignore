@@ -9,5 +9,5 @@ dist
 test.*
 test-types.ts
 
-examples/*
+# Local scratch test scripts. The committed suites live in packages/*/test.
 tests/*

@@ -406,28 +406,38 @@ export const aiChainMethods = (
     headers.Authorization = `Bearer ${writeKey}`;
   }
 
+  const generateText = (async (options: GenerateTextOptions) => {
+    if (!options.prompt && !options.messages) {
+      throw new Error('Either prompt or messages must be provided');
+    }
+    const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
+
+    if (options.stream) {
+      const stream = await requestHandler(
+        'POST',
+        endpoint,
+        options,
+        headers,
+        true
+      );
+      return new TextStreamingResponse(stream);
+    }
+
+    return requestHandler('POST', endpoint, options, headers);
+  }) as {
+    (
+      options: GenerateTextOptions & { stream: true }
+    ): Promise<TextStreamingResponse>;
+    (
+      options: GenerateTextOptions & { stream?: false }
+    ): Promise<TextGenerationResponse>;
+    (options: GenerateTextOptions): Promise<
+      TextGenerationResponse | TextStreamingResponse
+    >;
+  };
+
   return {
-    generateText: async (
-      options: GenerateTextOptions
-    ): Promise<TextGenerationResponse | TextStreamingResponse> => {
-      if (!options.prompt && !options.messages) {
-        throw new Error('Either prompt or messages must be provided');
-      }
-      const endpoint = `${uploadUrl}/buckets/${bucketSlug}/ai/text`;
-
-      if (options.stream) {
-        const stream = await requestHandler(
-          'POST',
-          endpoint,
-          options,
-          headers,
-          true
-        );
-        return new TextStreamingResponse(stream);
-      }
-
-      return requestHandler('POST', endpoint, options, headers);
-    },
+    generateText,
 
     /**
      * Stream text generation with an Anthropic-like API

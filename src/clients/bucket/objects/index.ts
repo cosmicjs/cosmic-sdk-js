@@ -23,24 +23,24 @@ export const objectsChainMethods = (
   bucketConfig: BucketConfig,
   apiConfig: APIConfig
 ) => ({
-  find(query: GenericObject) {
+  find<T = any>(query: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/objects?read_key=${bucketConfig.readKey}${previewTokenParam(
       bucketConfig.previewToken
     )}${encodedQueryParam(query)}`;
-    return new FindChaining(endpoint, bucketConfig);
+    return new FindChaining<T>(endpoint, bucketConfig);
   },
 
-  findOne<T extends Record<string, unknown>>(query: NonEmptyObject<T>) {
+  findOne<TQuery extends Record<string, unknown>, TResult = any>(
+    query: NonEmptyObject<TQuery>
+  ) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/objects?read_key=${bucketConfig.readKey}&limit=1${previewTokenParam(
       bucketConfig.previewToken
-    )}${encodedQueryParam(
-      query
-    )}`;
-    return new FindOneChaining(endpoint, bucketConfig);
+    )}${encodedQueryParam(query)}`;
+    return new FindOneChaining<TResult>(endpoint, bucketConfig);
   },
 
   async insertOne(data: GenericObject) {
