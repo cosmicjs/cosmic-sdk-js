@@ -14,18 +14,28 @@ export const objectRevisionsChainMethods = (
   bucketConfig: BucketConfig,
   apiConfig: APIConfig
 ) => ({
-  find(objectId: string) {
-    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/${objectId}/revisions?read_key=${bucketConfig.readKey}${previewTokenParam(
-      bucketConfig.previewToken
-    )}`;
-    return new FindChaining(endpoint, bucketConfig);
+  find<T = any>(objectId: string) {
+    const endpoint = `${apiConfig.apiUrl}/buckets/${
+      bucketConfig.bucketSlug
+    }/objects/${objectId}/revisions?read_key=${
+      bucketConfig.readKey
+    }${previewTokenParam(bucketConfig.previewToken)}`;
+    return new FindChaining<T>(endpoint, bucketConfig);
   },
 
-  findOne({ objectId, revisionId }: { objectId: string; revisionId: string }) {
-    const endpoint = `${apiConfig.apiUrl}/buckets/${bucketConfig.bucketSlug}/objects/${objectId}/revisions/${revisionId}?read_key=${bucketConfig.readKey}${previewTokenParam(
-      bucketConfig.previewToken
-    )}`;
-    return new FindOneChaining(endpoint, bucketConfig);
+  findOne<T = any>({
+    objectId,
+    revisionId,
+  }: {
+    objectId: string;
+    revisionId: string;
+  }) {
+    const endpoint = `${apiConfig.apiUrl}/buckets/${
+      bucketConfig.bucketSlug
+    }/objects/${objectId}/revisions/${revisionId}?read_key=${
+      bucketConfig.readKey
+    }${previewTokenParam(bucketConfig.previewToken)}`;
+    return new FindOneChaining<T>(endpoint, bucketConfig);
   },
 
   async insertOne(objectId: string, data: InsertObjectRevisionType) {

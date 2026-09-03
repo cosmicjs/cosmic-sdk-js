@@ -55,20 +55,22 @@ export const mediaChainMethods = (
   bucketConfig: BucketConfig,
   apiConfig: APIConfig
 ) => ({
-  find(query?: GenericObject) {
+  find<T = any>(query?: GenericObject) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/media?read_key=${bucketConfig.readKey}${encodedQueryParam(query)}`;
-    return new FindChaining(endpoint);
+    return new FindChaining<T>(endpoint);
   },
 
-  findOne<T extends Record<string, unknown>>(query: NonEmptyObject<T>) {
+  findOne<TQuery extends Record<string, unknown>, TResult = any>(
+    query: NonEmptyObject<TQuery>
+  ) {
     const endpoint = `${apiConfig.apiUrl}/buckets/${
       bucketConfig.bucketSlug
     }/media?read_key=${bucketConfig.readKey}&limit=1${encodedQueryParam(
       query
     )}`;
-    return new FindOneChaining(endpoint);
+    return new FindOneChaining<TResult>(endpoint);
   },
 
   async insertOne(params: InsertMediaType) {

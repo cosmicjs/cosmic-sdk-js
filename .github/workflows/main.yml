@@ -25,3 +25,5 @@ jobs:
         run: npm run tsc:lint
       - name: Build Package
         run: npm run build
+      - name: Test
+        run: npm test

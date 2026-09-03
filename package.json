@@ -1,20 +1,25 @@
 {
   "name": "@cosmicjs/sdk",
   "version": "2.2.0",
-  "description": "The official client module for Cosmic. This module helps you easily add dynamic content to your website or application using the Cosmic headless CMS.",
+  "description": "Official JavaScript SDK for Cosmic. Fetch content, manage media, and generate AI in Next.js, Node, and the browser.",
   "keywords": [
+    "cosmic",
     "headlesscms",
+    "headless-cms",
     "cms",
-    "node",
-    "content",
-    "api",
+    "typescript",
+    "javascript",
+    "nextjs",
     "react",
-    "reactjs",
     "vue",
-    "vuejs",
-    "nextjs"
+    "nuxt",
+    "astro",
+    "jamstack",
+    "content-api",
+    "ai",
+    "node"
   ],
-  "homepage": "https://www.cosmicjs.com",
+  "homepage": "https://github.com/cosmicjs/cosmic-sdk-js#readme",
   "bugs": {
     "url": "https://github.com/cosmicjs/cosmic-sdk-js/issues"
   },
@@ -31,11 +36,24 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --minify",
     "tsc:lint": "tsc",
     "lint": "eslint --fix 'src/**/*.{ts,js}'",
     "format": "prettier --write './src/**/*.{ts,js}'",
+    "test": "npm test --workspace @cosmicjs/rich-text",
     "release": "npm run build && changeset publish",
     "changeset": "changeset",
     "prepare": "husky install",

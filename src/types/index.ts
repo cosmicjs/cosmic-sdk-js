@@ -4,6 +4,16 @@ export type { GenericObject } from './generic.types';
 export type { PromiseFnType } from './promise.types';
 export type { BatchOperation } from '../clients/bucket/objects';
 export type { Block, BlocksResponse } from './blocks.types';
+export type {
+  CosmicObject,
+  CosmicMedia,
+  ObjectsResponse,
+  ObjectResponse,
+  MediaListResponse,
+  MediaResponse,
+  RevisionsResponse,
+  RevisionResponse,
+} from './object.types';
 
 // AI-related types
 export type {
