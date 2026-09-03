@@ -1,5 +1,15 @@
 # @cosmicjs/sdk
 
+## 2.3.0
+
+### Minor Changes
+
+- 3c9615f: Add opt-in result generics to `objects`, `media`, and `objectRevisions` reads, so `find<Post>()` and `findOne<Query, Post>()` return typed results. Untyped calls are unchanged: the generics default to `any`, so existing code compiles exactly as before. Also exports `CosmicObject`, `CosmicMedia`, and the response types, and returns `TextStreamingResponse` from `generateText({ stream: true })` without needing a cast.
+
+### Patch Changes
+
+- 3c9615f: Publish only `dist`. The tarball previously shipped 59 files (1.4 MB unpacked) including lockfiles, internal docs, local test scripts, editor/tooling dotfiles, and a nested copy of `packages/rich-text` with its `marked` dependency. It is now 6 files (61.7 kB unpacked). Also adds an `exports` map and `sideEffects: false` for correct ESM/CJS resolution and tree-shaking.
+
 ## 2.2.0
 
 ### Minor Changes
