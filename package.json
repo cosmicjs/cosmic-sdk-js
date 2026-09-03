@@ -1,6 +1,6 @@
 {
   "name": "@cosmicjs/sdk",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Official JavaScript SDK for Cosmic. Fetch content, manage media, and generate AI in Next.js, Node, and the browser.",
   "keywords": [
     "cosmic",
