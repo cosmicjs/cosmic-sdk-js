@@ -345,6 +345,12 @@ const image = await cosmic.ai.generateImage({
   folder: 'ai-generated-images',
 });
 
+const icon = await cosmic.ai.generateImage({
+  prompt: 'Minimal coffee cup icon, flat vector, no text',
+  format: 'svg',
+  aspect_ratio: '1:1',
+});
+
 const video = await cosmic.ai.generateVideo({
   prompt: 'Product rotates smoothly with soft studio lighting',
   duration: 8,

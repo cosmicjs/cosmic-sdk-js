@@ -16,11 +16,16 @@ export interface GenerateTextOptions {
 
 export interface GenerateImageOptions {
   prompt: string;
+  format?: 'png' | 'svg';
   model?:
     | 'gemini-3.1-flash-image-preview'
     | 'gemini-3-pro-image-preview'
     | 'dall-e-3'
     | (string & {});
+  size?: string;
+  aspect_ratio?: '1:1' | '16:9' | '9:16' | '4:3' | '3:4' | (string & {});
+  quality?: 'standard' | 'hd';
+  reference_images?: string[];
   metadata?: Record<string, any>;
   folder?: string;
   alt_text?: string;
