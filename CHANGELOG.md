@@ -1,5 +1,11 @@
 # @cosmicjs/sdk
 
+## 2.4.0
+
+### Minor Changes
+
+- 8317053: Add `format` (`png` | `svg`) and `aspect_ratio` to `generateImage()`. SVG uploads are stored as `image/svg+xml`; use `media.url` (CDN) to display them, since imgix does not serve SVG.
+
 ## 2.3.0
 
 ### Minor Changes
